@@ -51,6 +51,92 @@
         </div>
     </main>
 
+    <!-- INTERACTIVE DEMONSTRATION SECTION -->
+    <section class="demo-section" id="demo">
+        <h2 style="text-align: center; margin-top: 0;">Interactive Interbank Flow Demonstration</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">Select a transfer scenario to visualize network routing, post-quantum encryption, and channel isolation in real time.</p>
+        
+        <div class="demo-selector">
+            <button class="btn-demo active" onclick="lancerSimulation('BNP')">Scenario A: Barclays ➔ BNP Paribas</button>
+            <button class="btn-demo" onclick="lancerSimulation('ING')">Scenario B: Barclays ➔ ING Groep</button>
+        </div>
+
+        <div class="flow-container" id="flow-display">
+            <!-- Dynamic steps will be rendered here via JavaScript -->
+        </div>
+    </section>
+
+    <script>
+        const simulations = {
+            BNP: {
+                banque_dest: "BNP PARIBAS",
+                bic_dest: "BNPAFRPPXXX",
+                jeton: "a7b3c2d5e6f890ab",
+                r: "0.3542",
+                v: "Yt4TJ1V6zD+bBri4kZvQP0FpT9gELd..."
+            },
+            ING: {
+                banque_dest: "ING GROEP",
+                bic_dest: "INGBNL2AXXX",
+                jeton: "f8e2d1c9b8a765cd",
+                r: "0.7814",
+                v: "K9pLM2N4xZ+qWrs5tYvBN0PlK8mNDf..."
+            }
+        };
+
+        function lancerSimulation(cible) {
+            document.querySelectorAll('.btn-demo').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const data = simulations[cible];
+            const container = document.getElementById('flow-display');
+            
+            container.innerHTML = `
+                <div class="flow-step">
+                    <h4>Step 1: Core Banking Initialization (BARCLAYS)</h4>
+                    <p>The client approves a 250,000.00 EUR transfer. The central ledger generates the regulatory ISO 20022 <code>pacs.008</code> financial document.</p>
+                    <div class="code-box"><strong>INPUT (Barclays ESB):</strong><br>{
+  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260801-001" },
+  "credit_transfer": { "end_to_end_id": "E2E-1442188", "dbtr_nm": "Corporate Client", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } }
+}</div>
+                </div>
+
+                <div class="flow-step">
+                    <h4>Step 2: Hardening via SECURE_CRYPTO Black Box (At Barclays)</h4>
+                    <p>The ESB forwards the stream to the local container. The compiled core validates the license, derives the 14 coefficients bound to the channel, and injects a RAM-generated ephemeral anti-replay token.</p>
+                    <div class="code-box"><strong>OUTPUT to Network (Opaque):</strong><br>{
+  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260801-001" },
+  "crypto_payload": { 
+    "algorithm": "Hopf-Custom-Alg", 
+    "r_coefficient": <span>${data.r}</span>, 
+    "v_vector_b64": "${data.v}", 
+    "jeton": <em>"${data.jeton}"</em> 
+  }
+}</div>
+                </div>
+
+                <div class="flow-step">
+                    <h4>Step 3: Interbank Network Transit</h4>
+                    <p>The packet transits across clearing networks (SWIFT/SIA). Technical routing elements remain readable, but the sensitive financial core is entirely encrypted (Absolute Post-Quantum Immunity).</p>
+                </div>
+
+                <div class="flow-step">
+                    <h4>Step 4: Reception & Internal Routing (At ${data.banque_dest})</h4>
+                    <p>The receiving clearing terminal intercepts the packet, validates the header, and routes the full JSON structure straight to its local <code>secure_crypto</code> container.</p>
+                    <div class="code-box"><strong>INPUT (Receiving Black Box):</strong><br>Identical to Step 2 OUTPUT (The <em>"${data.jeton}"</em> token transits in plaintext for geometric matrix realignment).</div>
+                </div>
+
+                <div class="flow-step">
+                    <h4>Step 5: Decryption & Core Banking Restoration</h4>
+                    <p>The receiving cryptographic core parses the token to eliminate polynomial perturbation, processes the identical 14 deterministic coefficients, and restores the original transaction with perfect integrity.</p>
+                    <div class="code-box"><strong>Final OUTPUT (Delivered to Core Banking):</strong><br>✅ ISO 20022 financial payload 100% restored in plaintext with anti-replay integrity. Ready for accounting ledger execution.</div>
+                </div>
+            `;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => lancerSimulation('BNP'));
+    </script>
+    <!-- END INTERACTIVE DEMONSTRATION SECTION -->
     <section class="contact-section" id="contact">
         <h2>Schedule a Technical Workshop (15 min)</h2>
         <p>Explore our local ISO 20022 runtime simulator and validate the black box integration flow alongside your infrastructure and security engineers.</p>
