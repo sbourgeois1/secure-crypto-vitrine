@@ -70,21 +70,22 @@
             BNP: {
                 banque_dest: "BNP PARIBAS",
                 bic_dest: "BNPAFRPPXXX",
-                jeton: "a7b3c2d5e6f890ab",
+                token_a: "a7b3c2d5e6f890ab",
+                token_b: "b9e4f3a2c1d098ef",
                 r: "0.3542",
                 v: "Yt4TJ1V6zD+bBri4kZvQP0FpT9gELd..."
             },
             ING: {
                 banque_dest: "ING GROEP",
                 bic_dest: "INGBNL2AXXX",
-                jeton: "f8e2d1c9b8a765cd",
+                token_a: "f8e2d1c9b8a765cd",
+                token_b: "c3d2e1f0a9b87654",
                 r: "0.7814",
                 v: "K9pLM2N4xZ+qWrs5tYvBN0PlK8mNDf..."
             }
         };
 
         function lancerSimulation(cible) {
-            // Mise à jour visuelle des boutons
             document.querySelectorAll('.btn-demo').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
@@ -96,47 +97,50 @@
                     <h4>Étape 1 : Initialisation dans le Core Banking (BARCLAYS)</h4>
                     <p>Le client valide un virement de 250 000,00 EUR. Le système central génère le document financier réglementaire au format standardisé ISO 20022 <code>pacs.008</code>.</p>
                     <div class="code-box"><strong>INPUT (ESB Barclays) :</strong><br>{
-  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260801-001" },
+  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260805-001" },
   "credit_transfer": { "end_to_end_id": "E2E-1442188", "dbtr_nm": "Corporate Client", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } }
 }</div>
                 </div>
 
                 <div class="flow-step">
                     <h4>Étape 2 : Sécurisation par la Boîte Noire SECURE_CRYPTO (Chez Barclays)</h4>
-                    <p>L'ESB pousse le flux vers le conteneur local. Le cœur binaire valide la licence, dérive les 14 coefficients spécifiques au couloir interbancaire et injecte un jeton anti-rejeu éphémère généré en RAM.</p>
+                    <p>L'ESB pousse le flux vers le conteneur local. Le cœur binaire valide la licence, dérive les 14 coefficients spécifiques au couloir interbancaire et injecte le double jeton validé lors du Handshake synchrone.</p>
                     <div class="code-box"><strong>OUTPUT réseau (Opaque) :</strong><br>{
-  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260801-001" },
+  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260805-001" },
   "crypto_payload": { 
-    "algorithm": "Hopf-Custom-Alg", 
+    "algorithm": "Geometric-Manifold-Shield", 
     "r_coefficient": <span>${data.r}</span>, 
     "v_vector_b64": "${data.v}", 
-    "jeton": <em>"${data.jeton}"</em> 
+    "handshake_tokens": {
+      "token_a_emission": <em>"${data.token_a}"</em>,
+      "token_b_reception": <em>"${data.token_b}"</em>
+    }
   }
 }</div>
                 </div>
 
                 <div class="flow-step">
                     <h4>Étape 3 : Transit Réseau Interbancaire</h4>
-                    <p>Le message transite sur le réseau (SWIFT/SIA). L'en-tête technique reste lisible pour les automates de compensation, mais la charge utile financière est totalement indéchiffrable (Immunité Post-Quantique absolue).</p>
+                    <p>Le message transite sur le réseau (SWIFT/SIA). L'en-tête technique reste lisible pour les automates de compensation, mais la charge utile financière et l'accord de Handshake sont totalement indéchiffrables.</p>
                 </div>
 
                 <div class="flow-step">
                     <h4>Étape 4 : Réception et Routage Interne (Chez ${data.banque_dest})</h4>
                     <p>Le terminal réseau de la banque destinataire intercepte le message, valide l'en-tête et pousse le bloc JSON directement vers son conteneur local <code>secure_crypto</code>.</p>
-                    <div class="code-box"><strong>INPUT (Boîte Noire destinataire) :</strong><br>Identique à l'OUTPUT de l'étape 2 (Le jeton <em>"${data.jeton}"</em> transite en clair pour l'inversion géométrique).</div>
+                    <div class="code-box"><strong>INPUT (Boîte Noire destinataire) :</strong><br>Identique à l'OUTPUT de l'étape 2 (Le couple de jetons transite pour permettre l'inversion géométrique).</div>
                 </div>
 
                 <div class="flow-step">
                     <h4>Étape 5 : Déchiffrement et Restauration Core Banking</h4>
-                    <p>Le cœur binaire de la banque réceptrice extrait le jeton pour annuler la perturbation, applique le même masque de 14 coefficients déterministes et restitue le document d'origine avec intégrité.</p>
-                    <div class="code-box"><strong>OUTPUT final (Délivré au Core Banking) :</strong><br>✅ Message financier ISO 20022 restauré en clair à 100% avec intégrité anti-rejeu. Prêt pour l'inscription au grand livre comptable.</div>
+                    <p>Le cœur binaire de la banque réceptrice extrait les jetons combinés pour annuler la double perturbation, applique le même masque de 14 coefficients déterministes et restitue le document d'origine avec intégrité.</p>
+                    <div class="code-box"><strong>OUTPUT final (Délivré au Core Banking) :</strong><br>✅ Message financier ISO 20022 restauré en clair à 100% avec intégrité anti-rejeu et validation bilatérale de canal. Prêt pour l'inscription au grand livre comptable.</div>
                 </div>
             `;
         }
 
-        // Lancement par défaut au chargement
         document.addEventListener("DOMContentLoaded", () => lancerSimulation('BNP'));
     </script>
+
     <!-- FIN DE SECTION DÉMONSTRATION INTERACTIVE -->
     <section class="contact-section" id="contact">
         <h2>Planifier un Atelier Technique (15 min)</h2>
