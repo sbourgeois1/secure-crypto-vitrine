@@ -19,6 +19,13 @@
         <a href="#contact" class="btn">Réserver un atelier technique</a>
     </section>
 
+    <!-- BANDEAU DE CERTIFICATION TECHNIQUE INTÉGRÉ -->
+    <section class="tech-description-box" style="max-width: 1100px; margin: 40px auto; padding: 25px; background: rgba(10, 15, 29, 0.6); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,255,135,0.05);">
+        <p style="text-align: justify; line-height: 1.8; font-size: 1.15rem; color: var(--text-main); margin: 0;">
+            💡 <strong>Sécurité rigoureuse :</strong> Le message financier ISO 20022 est traduit sous forme de vecteur dans un espace à <strong>8 dimensions</strong> et contient en plus <strong>2 jetons éphémères</strong> pour chaque virement. Ceci rend le processus de cryptage unique. Non seulement les messages sont indéchiffrables, mais tout déchiffrement éventuel ultérieur est rendu totalement inexploitable, même avec les ordinateurs quantiques.
+        </p>
+    </section>
+
     <main class="grid">
         <div class="card">
             <h3>Immunité Post-Quantique</h3>
@@ -27,12 +34,12 @@
 
         <div class="card">
             <h3>Cloisonnement Endogène par BIC</h3>
-            <p>Aucun dictionnaire de clés ou base de données relationnelle à maintenir. La solution dérive de manière déterministe et autonome un masque unique à 14 paramètres fixes par couloir d'échange interbancaire, assurant une étanchéité parfaite de chaque liaison.</p>
+            <p>Aucun dictionnaire de clés ou base de données relationnelle à maintenir. La solution dérive de manière déterministe et autonome un masque unique à 14 paramètres par couloir d'échange interbancaire, assurant une étanchéité parfaite de chaque liaison.</p>
         </div>
-
+        
         <div class="card">
-            <h3>Compatibilité Infrastructure Immédiate</h3>
-            <p>Déploiement Plug & Play ultra-léger sous forme de conteneur. S'intègre directement au-dessus de vos architectures Core Banking existantes sans exiger de modification de vos réseaux. Impact nul sur la bande passante et la latence applicative.</p>
+            <h3>Compatibilité Infrastructure</h3>
+            <p>Déploiement Plug & Play sous forme de conteneur Docker. S'intègre directement au-dessus de vos architectures Core Banking existantes sans exiger de modification de vos réseaux de transport. **Évite le transit répété de lourdes signatures RSA, éliminant toute surcharge de bande passante**.</p>
         </div>
 
         <div class="card">
@@ -47,13 +54,14 @@
 
         <div class="card">
             <h3>Conformité Native ISO 20022</h3>
-            <p>Traitement standardisé des flux financiers inter-agences. L'en-tête technique d'application (AppHdr) est préservé en clair pour les automates de routage, tandis que la charge utile de transfert de fonds (pacs.008) est intégralement chiffrée [2.1].</p>
+            <p>Protocole optimisé pour les messages financiers de gros montants <strong>pacs.008 (Virements Clients)</strong> et <strong>pacs.009 (Virements de Couverture)</strong>. L'en-tête technique d'application (AppHdr) reste lisible pour les automates de routage.</p>
         </div>
     </main>
-    <!-- SECTION DÉMONSTRATION INTERACTIVE -->
+
+    <!-- SECTION DÉMONSTRATION INTERACTIVE SYMÉTRIQUE -->
     <section class="demo-section" id="demo">
         <h2 style="text-align: center; margin-top: 0;">Démonstration Interactive du Flux Interbancaire</h2>
-        <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">Sélectionnez un scénario de virement pour visualiser le routage, le chiffrement post-quantique et l'isolation des canaux en temps réel.</p>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">Sélectionnez un scénario de virement pour visualiser le routage, la taille des charges utiles réseau et la validation du double jeton de Handshake en temps réel.</p>
         
         <div class="demo-selector">
             <button class="btn-demo active" onclick="lancerSimulation('BNP')">Scénario A : Barclays ➔ BNP Paribas</button>
@@ -65,6 +73,19 @@
         </div>
     </section>
 
+    <!-- SECTION CONTACT FORMSPREE RESTAURÉE -->
+    <section class="contact-section" id="contact">
+        <h2>Planifier un Atelier Technique (15 min)</h2>
+        <p>Réservé aux directions de l'infrastructure, de la cybersécurité (RSSI) et de l'innovation bancaire. Recevez notre conteneur d'évaluation isolé pour vos simulations locales.</p>
+        <form action="https://formspree.io" method="POST">
+            <input type="text" name="name" placeholder="Votre nom complet" required>
+            <input type="email" name="email" placeholder="Votre adresse e-mail professionnelle" required>
+            <input type="text" name="institution" placeholder="Institution financière / Organisme" required>
+            <textarea name="message" rows="5" placeholder="Précisez vos contraintes d'infrastructure (Kafka, MQ, ESB...)" required></textarea>
+            <button type="submit" class="btn">Demander le Package d'Évaluation</button>
+        </form>
+    </section>
+
     <script>
         const simulations = {
             BNP: {
@@ -72,6 +93,8 @@
                 bic_dest: "BNPAFRPPXXX",
                 token_a: "a7b3c2d5e6f890ab",
                 token_b: "b9e4f3a2c1d098ef",
+                len_in: "324",
+                len_out: "442",
                 r: "0.3542",
                 v: "Yt4TJ1V6zD+bBri4kZvQP0FpT9gELd..."
             },
@@ -80,6 +103,8 @@
                 bic_dest: "INGBNL2AXXX",
                 token_a: "f8e2d1c9b8a765cd",
                 token_b: "c3d2e1f0a9b87654",
+                len_in: "324",
+                len_out: "442",
                 r: "0.7814",
                 v: "K9pLM2N4xZ+qWrs5tYvBN0PlK8mNDf..."
             }
@@ -87,7 +112,9 @@
 
         function lancerSimulation(cible) {
             document.querySelectorAll('.btn-demo').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if(event && event.target) {
+                event.target.classList.add('active');
+            }
 
             const data = simulations[cible];
             const container = document.getElementById('flow-display');
@@ -95,18 +122,18 @@
             container.innerHTML = `
                 <div class="flow-step">
                     <h4>Étape 1 : Initialisation dans le Core Banking (BARCLAYS)</h4>
-                    <p>Le client valide un virement de 250 000,00 EUR. Le système central génère le document financier réglementaire au format standardisé ISO 20022 <code>pacs.008</code>.</p>
-                    <div class="code-box"><strong>INPUT (ESB Barclays) :</strong><br>{
-  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260805-001" },
-  "credit_transfer": { "end_to_end_id": "E2E-1442188", "dbtr_nm": "Corporate Client", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } }
+                    <p>Le client valide un virement de 250 000,00 EUR. Le système central génère le message réglementaire ISO 20022 <code>pacs.008</code> ou <code>pacs.009</code>.</p>
+                    <div class="code-box"><strong>INPUT local (ESB Barclays) | Taille : ${data.len_in} octets :</strong><br>{
+  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260807-001" },
+  "credit_transfer": { "end_to_end_id": "E2E-1442188", "dbtr_nm": "Client Émetteur", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } }
 }</div>
                 </div>
 
                 <div class="flow-step">
-                    <h4>Étape 2 : Sécurisation par la Boîte Noire SECURE_CRYPTO (Chez Barclays)</h4>
-                    <p>L'ESB pousse le flux vers le conteneur local. Le cœur binaire valide la licence, dérive les 14 coefficients spécifiques au couloir interbancaire et injecte le double jeton validé lors du Handshake synchrone.</p>
-                    <div class="code-box"><strong>OUTPUT réseau (Opaque) :</strong><br>{
-  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260805-001" },
+                    <h4>Étape 2 : Chiffrement par la Passerelle SECURE_CRYPTO (Chez Barclays)</h4>
+                    <p>L'ESB interne pousse le flux vers le conteneur. Le cœur binaire dérive les 14 coefficients du canal et traduit le message sous forme de vecteur à <strong>8 dimensions</strong> enrichi du double jeton du Handshake synchrone.</p>
+                    <div class="code-box"><strong>OUTPUT Réseau opaque | Taille : ${data.len_out} octets (Aucune surcharge) :</strong><br>{
+  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260807-001" },
   "crypto_payload": { 
     "algorithm": "Geometric-Manifold-Shield", 
     "r_coefficient": <span>${data.r}</span>, 
@@ -121,27 +148,27 @@
 
                 <div class="flow-step">
                     <h4>Étape 3 : Transit Réseau Interbancaire</h4>
-                    <p>Le message transite sur le réseau (SWIFT/SIA). L'en-tête technique reste lisible pour les automates de compensation, mais la charge utile financière et l'accord de Handshake sont totalement indéchiffrables.</p>
+                    <p>Le message transite sur le réseau de compensation (SWIFT/SIA). L'en-tête technique reste lisible pour les aiguillages, mais la charge utile financière à 8 dimensions est indéchiffrable et immunisée contre toute interception.</p>
                 </div>
 
                 <div class="flow-step">
                     <h4>Étape 4 : Réception et Routage Interne (Chez ${data.banque_dest})</h4>
-                    <p>Le terminal réseau de la banque destinataire intercepte le message, valide l'en-tête et pousse le bloc JSON directement vers son conteneur local <code>secure_crypto</code>.</p>
-                    <div class="code-box"><strong>INPUT (Boîte Noire destinataire) :</strong><br>Identique à l'OUTPUT de l'étape 2 (Le couple de jetons transite pour permettre l'inversion géométrique).</div>
+                    <p>Le routeur d'infrastructure de la banque réceptrice intercepte le paquet et transmet la structure JSON brute directement à sa boîte noire locale <code>secure_crypto</code>.</p>
+                    <div class="code-box"><strong>INPUT local (Boîte Noire destinataire) | Taille : ${data.len_out} octets :</strong><br>Identique à l'OUTPUT réseau de l'étape 2. Les jetons éphémères transitent pour aligner la reconstruction géométrique.</div>
                 </div>
-
                 <div class="flow-step">
                     <h4>Étape 5 : Déchiffrement et Restauration Core Banking</h4>
-                    <p>Le cœur binaire de la banque réceptrice extrait les jetons combinés pour annuler la double perturbation, applique le même masque de 14 coefficients déterministes et restitue le document d'origine avec intégrité.</p>
-                    <div class="code-box"><strong>OUTPUT final (Délivré au Core Banking) :</strong><br>✅ Message financier ISO 20022 restauré en clair à 100% avec intégrité anti-rejeu et validation bilatérale de canal. Prêt pour l'inscription au grand livre comptable.</div>
+                    <p>Le cœur binaire de la banque réceptrice valide sa licence locale, applique l'inversion géométrique sur les jetons combinés et restitue le document d'origine avec intégrité.</p>
+                    <div class="code-box"><strong>OUTPUT final (Délivré au Core Banking destinataire) :</strong><br>✅ [SUCCÈS ${data.banque_dest}] Inversion réussie. Message financier ISO 20022 restauré en clair à 100% avec intégrité anti-rejeu et anti-spoofing. Prêt pour l'inscription au grand livre.</div>
                 </div>
             `;
         }
 
+        // Lancement par défaut au chargement de la page
         document.addEventListener("DOMContentLoaded", () => lancerSimulation('BNP'));
     </script>
 
-    <!-- FIN DE SECTION DÉMONSTRATION INTERACTIVE -->
+    <!-- SECTION CONTACT D'ORIGINE RESTAURÉE -->
     <section class="contact-section" id="contact">
         <h2>Planifier un Atelier Technique (15 min)</h2>
         <p>Découvrez notre simulateur de runtime local ISO 20022 et validez l'intégration de notre boîte noire avec vos ingénieurs d'infrastructure.</p>

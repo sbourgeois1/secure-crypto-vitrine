@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>secure_crypto - Sovereign Post-Quantum Shield</title>
+    <title>secure_crypto - Post-Quantum Sovereign Shield</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,47 +14,54 @@
     </header>
 
     <section class="hero">
-        <h1>A Sovereign Shield for the Post-Quantum Era</h1>
-        <p>An autonomous, ISO 20022-native interbank encryption gateway featuring end-to-end BIC code isolation. Protect your critical transaction flows against tomorrow's quantum threats.</p>
-        <a href="#contact" class="btn">Schedule a Technical Workshop</a>
+        <h1>Sovereign Shield for the Post-Quantum Era</h1>
+        <p>Autonomous interbank encryption gateway, native ISO 20022 compliant, and isolated per BIC code. Protect your strategic financial flows against tomorrow's threats.</p>
+        <a href="#contact" class="btn">Book a Technical Workshop</a>
+    </section>
+
+    <!-- INTEGRATED TECHNICAL CERTIFICATION BANNER -->
+    <section class="tech-description-box" style="max-width: 1100px; margin: 40px auto; padding: 25px; background: rgba(10, 15, 29, 0.6); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,255,135,0.05);">
+        <p style="text-align: justify; line-height: 1.8; font-size: 1.15rem; color: var(--text-main); margin: 0;">
+            💡 <strong>Strict security :</strong> The financial ISO 20022 message is translated into a vector within an <strong>8-dimensional space</strong> and includes <strong>2 ephemeral tokens</strong> for each transfer. This makes the encryption process unique, rendering the messages not only indecipherable but also unusable even if a decryption were to occur, including with quantum computers.
+        </p>
     </section>
 
     <main class="grid">
         <div class="card">
             <h3>Post-Quantum Immunity</h3>
-            <p>Our proprietary mathematical core relies on non-linear, non-commutative, and non-associative continuous high-dimensional structures. It natively neutralizes future quantum decryption threats (resilience to Shor-type algorithmic analysis), effectively blocking "Harvest Now, Decrypt Later" strategies.</p>
+            <p>Our proprietary mathematical core relies on continuous, high-dimensional, non-linear, and non-commutative algebraic structures. It natively neutralizes future quantum decryption threats (Shor-type analysis resistance), defeating "Harvest Now, Decrypt Later" strategies.</p>
         </div>
 
         <div class="card">
-            <h3>Endogenous BIC-Based Isolation</h3>
-            <p>Zero key management directories or relational databases to maintain. The solution deterministically and autonomously derives a unique 14-fixed-parameter mask for every single interbank communication channel, ensuring absolute isolation for each transit line.</p>
+            <h3>Endogenous BIC Isolation</h3>
+            <p>No key dictionaries or relational databases to maintain. The solution autonomously and deterministically derives a unique 14-parameter mask per interbank communication channel, ensuring absolute containment for each connection.</p>
         </div>
-
+        
         <div class="card">
             <h3>Immediate Infrastructure Compatibility</h3>
-            <p>Ultra-lightweight Plug & Play containerized deployment. It integrates directly on top of your existing Core Banking architectures without requiring any telecommunication network modifications. Imposes zero impact on bandwidth or network latency.</p>
+            <p>Ultra-lightweight Plug & Play deployment as a Docker container. Integrates directly on top of your existing Core Banking architectures without requiring modifications to your transport networks. **Eliminates recurring transit of heavy RSA signatures, preventing any bandwidth overhead**.</p>
         </div>
 
         <div class="card">
             <h3>Fail-Closed Governance</h3>
-            <p>Temporal regulatory access compliance checks are fully secured inside our compiled, obfuscated binary core. Guarded by a 4096-bit RSA-PSS asymmetric time-lock, the service instantly blocks all operations in Fail-Closed mode if a license is expired or non-compliant.</p>
+            <p>Temporal regulatory access control is sanctified at the heart of the opaque binary core. Secured by a 4096-bit RSA-PSS asymmetric signature, the service instantly halts processing in Fail-Closed mode in case of an invalid or expired license.</p>
         </div>
 
         <div class="card">
             <h3>Proactive Monitoring & i18n</h3>
-            <p>Standardized system infrastructure logging emitting automated critical alerts to your SIEM tools 14 days prior to license expiration. Native international support for technical status and error logs across 5 languages (FR, EN, DE, NL, ES).</p>
+            <p>Standardized system logging emitting an automated critical alert 14 days prior to license expiration for your SIEM tools. Native international management of error statuses in 5 languages (FR, EN, DE, NL, ES).</p>
         </div>
 
         <div class="card">
             <h3>Native ISO 20022 Compliance</h3>
-            <p>Standardized management of cross-agency financial transaction routing. The technical Application Header (AppHdr) remains fully readable for automated clearing house sorting, while the core credit transfer payload (pacs.008) is fully encrypted [2.1].</p>
+            <p>Optimized protocol for high-value financial messages: <strong>pacs.008 (Customer Credit Transfers)</strong> and <strong>pacs.009 (Financial Institution Cov Payments)</strong>. The technical Application Header (AppHdr) remains in plaintext for automated routing network components.</p>
         </div>
     </main>
 
-    <!-- INTERACTIVE DEMONSTRATION SECTION -->
+    <!-- INTERACTIVE SYMMETRICAL DEMONSTRATION SECTION -->
     <section class="demo-section" id="demo">
         <h2 style="text-align: center; margin-top: 0;">Interactive Interbank Flow Demonstration</h2>
-        <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">Select a transfer scenario to visualize network routing, post-quantum encryption, and channel isolation in real time.</p>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">Select a transfer scenario to visualize routing, network payload sizes, and real-time validation of the double-token Handshake.</p>
         
         <div class="demo-selector">
             <button class="btn-demo active" onclick="lancerSimulation('BNP')">Scenario A: Barclays ➔ BNP Paribas</button>
@@ -66,13 +73,34 @@
         </div>
     </section>
 
-        <script>
+    <!-- SECURE CONTACT SECTION -->
+    <section class="contact-section" id="contact">
+        <h2>Schedule a Technical Workshop (15 min)</h2>
+        <p>Discover our local ISO 20022 runtime simulator and validate our black-box integration with your infrastructure engineers.</p>
+        
+        <!-- Secure form submission via Formspree -->
+        <form action="https://formspree.io" method="POST">
+            <input type="text" name="name" placeholder="Your Full Name" required>
+            <input type="text" name="institution" placeholder="Financial Institution / Bank" required>
+            <input type="email" name="email" placeholder="Professional Email Address" required>
+            <textarea name="message" rows="5" placeholder="Your message or availability" required></textarea>
+            <button type="submit">Request Workshop Access</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 secure_crypto. All rights reserved. Classification: Bank Confidential.</p>
+    </footer>
+
+    <script>
         const simulations = {
             BNP: {
                 banque_dest: "BNP PARIBAS",
                 bic_dest: "BNPAFRPPXXX",
                 token_a: "a7b3c2d5e6f890ab",
                 token_b: "b9e4f3a2c1d098ef",
+                len_in: "324",
+                len_out: "442",
                 r: "0.3542",
                 v: "Yt4TJ1V6zD+bBri4kZvQP0FpT9gELd..."
             },
@@ -81,6 +109,8 @@
                 bic_dest: "INGBNL2AXXX",
                 token_a: "f8e2d1c9b8a765cd",
                 token_b: "c3d2e1f0a9b87654",
+                len_in: "324",
+                len_out: "442",
                 r: "0.7814",
                 v: "K9pLM2N4xZ+qWrs5tYvBN0PlK8mNDf..."
             }
@@ -88,7 +118,9 @@
 
         function lancerSimulation(cible) {
             document.querySelectorAll('.btn-demo').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if(event && event.target) {
+                event.target.classList.add('active');
+            }
 
             const data = simulations[cible];
             const container = document.getElementById('flow-display');
@@ -96,18 +128,18 @@
             container.innerHTML = `
                 <div class="flow-step">
                     <h4>Step 1: Core Banking Initialization (BARCLAYS)</h4>
-                    <p>The client approves a 250,000.00 EUR transfer. The central ledger generates the regulatory ISO 20022 <code>pacs.008</code> financial document.</p>
-                    <div class="code-box"><strong>INPUT (Barclays ESB):</strong><br>{
-  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260805-001" },
-  "credit_transfer": { "end_to_end_id": "E2E-1442188", "dbtr_nm": "Corporate Client", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } }
+                    <p>The client approves a 250,000.00 EUR transfer. The central ledger generates the regulatory ISO 20022 <code>pacs.008</code> or <code>pacs.009</code> financial message.</p>
+                    <div class="code-box"><strong>Local INPUT (Barclays ESB) | Size: ${data.len_in} bytes :</strong><br>{
+  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260807-001" },
+  "credit_transfer": { "end_to_end_id": "E2E-1442188", "dbtr_nm": "Sender Client", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } }
 }</div>
                 </div>
 
                 <div class="flow-step">
-                    <h4>Step 2: Hardening via SECURE_CRYPTO Black Box (At Barclays)</h4>
-                    <p>The ESB forwards the stream to the local container. The compiled core validates the license, derives the 14 coefficients bound to the channel, and injects the double token validated during the synchronous Handshake.</p>
-                    <div class="code-box"><strong>OUTPUT to Network (Opaque):</strong><br>{
-  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260805-001" },
+                    <h4>Step 2: Hardening via SECURE_CRYPTO Gateway (At Barclays)</h4>
+                    <p>The internal ESB forwards the stream to the container. The compiled core derives the 14 channel-specific coefficients and translates the message into an <strong>8-dimensional</strong> vector enriched with the synchronous Handshake token pair.</p>
+                    <div class="code-box"><strong>Opaque Network OUTPUT | Size: ${data.len_out} bytes (No bandwidth overhead) :</strong><br>{
+  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260807-001" },
   "crypto_payload": { 
     "algorithm": "Geometric-Manifold-Shield", 
     "r_coefficient": <span>${data.r}</span>, 
@@ -122,44 +154,25 @@
 
                 <div class="flow-step">
                     <h4>Step 3: Interbank Network Transit</h4>
-                    <p>The packet transits across clearing networks (SWIFT/SIA). Technical routing elements remain readable, but the sensitive financial core and Handshake logs are entirely encrypted.</p>
+                    <p>The packet transits across clearing networks (SWIFT/SIA). Technical routing elements remain readable for switches, but the 8-dimensional financial payload is entirely encrypted and immune to any interception.</p>
                 </div>
 
                 <div class="flow-step">
                     <h4>Step 4: Reception & Internal Routing (At ${data.banque_dest})</h4>
-                    <p>The receiving clearing terminal intercepts the packet, validates the header, and routes the full JSON structure straight to its local <code>secure_crypto</code> container.</p>
-                    <div class="code-box"><strong>INPUT (Receiving Black Box):</strong><br>Identical to Step 2 OUTPUT (The token pair transits to allow exact geometric matrix realignment).</div>
+                    <p>The receiving clearing terminal intercepts the packet and routes the raw JSON structure straight to its local <code>secure_crypto</code> container.</p>
+                    <div class="code-box"><strong>Local INPUT (Receiving Black Box) | Size: ${data.len_out} bytes :</strong><br>Identique to Step 2 network OUTPUT. Ephemeral tokens transit to allow exact geometric matrix realignment.</div>
                 </div>
 
                 <div class="flow-step">
                     <h4>Step 5: Decryption & Core Banking Restoration</h4>
-                    <p>The receiving cryptographic core parses the combined tokens to eliminate polynomial perturbation, processes the identical 14 deterministic coefficients, and restores the original transaction with perfect integrity.</p>
-                    <div class="code-box"><strong>Final OUTPUT (Delivered to Core Banking):</strong><br>✅ ISO 20022 financial payload 100% restored in plaintext with anti-replay integrity and bilateral channel certification. Ready for accounting ledger execution.</div>
+                    <p>The receiving cryptographic core validates its local license, applies geometric matrix inversion using the combined tokens, and restores the original transaction with perfect integrity.</p>
+                    <p>The receiving cryptographic core validates its local license, applies geometric matrix inversion using the combined tokens, and restores the original transaction with perfect integrity.</p>
+                    <div class="code-box"><strong>Final OUTPUT (Delivered to receiving Core Banking):</strong><br>✅ [SUCCESS ${data.banque_dest}] Inversion verified. ISO 20022 financial payload 100% restored in plaintext with anti-replay and anti-spoofing integrity. Ready for ledger execution.</div>
                 </div>
             `;
         }
 
         document.addEventListener("DOMContentLoaded", () => lancerSimulation('BNP'));
     </script>
-
-    <!-- END INTERACTIVE DEMONSTRATION SECTION -->
-    <section class="contact-section" id="contact">
-        <h2>Schedule a Technical Workshop (15 min)</h2>
-        <p>Explore our local ISO 20022 runtime simulator and validate the black box integration flow alongside your infrastructure and security engineers.</p>
-        
-        <!-- Secure and free contact form via Formspree -->
-        <form action="https://formspree.io/f/xwvgdvja" method="POST">
-            <input type="text" name="name" placeholder="Your full name" required>
-            <input type="text" name="institution" placeholder="Financial Institution / Bank" required>
-            <input type="email" name="email" placeholder="Professional email address" required>
-            <textarea name="message" rows="5" placeholder="Your message or availability" required></textarea>
-            <button type="submit">Request Workshop Access</button>
-        </form>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 secure_crypto. All rights reserved. Classification: Bank Confidential.</p>
-    </footer>
-
 </body>
 </html>
