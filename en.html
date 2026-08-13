@@ -103,97 +103,95 @@
     </footer>
 
     <script>
-        const simulations = {
-            BNP: {
-                banque_dest: "BNP PARIBAS",
-                bic_dest: "BNPAFRPPXXX",
-                token_a: "a7b3c2d5e6f890ab",
-                token_b: "b9e4f3a2c1d098ef",
-                len_in: "324",
-                len_out: "442",
-                r: "0.3542",
-                v: "Yt4TJ1V6zD+bBri4kZvQP0FpT9gELd..."
-            },
-            ING: {
-                banque_dest: "ING GROEP",
-                bic_dest: "INGBNL2AXXX",
-                token_a: "f8e2d1c9b8a765cd",
-                token_b: "c3d2e1f0a9b87654",
-                len_in: "324",
-                len_out: "442",
-                r: "0.7814",
-                v: "K9pLM2N4xZ+qWrs5tYvBN0PlK8mNDf..."
-            }
-        };
+    const simulations = {
+        BNP: {
+            banque_dest: "BNP PARIBAS",
+            bic_dest: "BNPAFRPPXXX",
+            token_a: "a7b3c2d5e6f890ab",
+            token_b: "b9e4f3a2c1d098ef",
+            len_in: "324",
+            len_out: "442",
+            r: "0.3542",
+            v: "Yt4TJ1V6zD+bBri4kZvQP0FpT9gELd..."
+        },
+        ING: {
+            banque_dest: "ING GROEP",
+            bic_dest: "INGBNL2AXXX",
+            token_a: "f8e2d1c9b8a765cd",
+            token_b: "c3d2e1f0a9b87654",
+            len_in: "324",
+            len_out: "442",
+            r: "0.7814",
+            v: "K9pLM2N4xZ+qWrs5tYvBN0PlK8mNDf..."
+        }
+    };
 
-        function lancerSimulation(cible) {
-            document.querySelectorAll('.btn-demo').forEach(btn => btn.classList.remove('active'));
-            if(event && event.target) {
-                event.target.classList.add('active');
-            }
-
-            const data = simulations[cible];
-            const container = document.getElementById('flow-display');
-            
-            container.innerHTML = `
-                <div class="flow-step">
-                    <h4>Step 1: Core Banking Initialization (BARCLAYS)</h4>
-                    <p>The client approves a 250,000.00 EUR transfer. The central ledger generates the regulatory ISO 20022 <code>pacs.008</code> or <code>pacs.009</code> financial message.</p>
-                    <div class="code-box"><strong>Local INPUT | Size: ${data.len_in} bytes :</strong><br>{ "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}" }, "credit_transfer": { "end_to_end_id": "E2E-1442188", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } } }</div>
-                </div>
-                <div class="flow-step">
-                    <h4>Step 2: Hardening via SECURE_CRYPTO Gateway (At Barclays)</h4>
-                    <p>The core binary derives the 14 channel coefficients and translates the message into an <strong>8-dimensional</strong> continuous vector, combining local RAM Token A with the synchronous Handshake Token B.</p>
-                <div class="flow-step">
-                    <h4>Step 2: Hardening via SECURE_CRYPTO Gateway (At Barclays)</h4>
-                    <p>The core binary derives the 14 channel coefficients and translates the message into an <strong>8-dimensional</strong> continuous vector, combining local RAM Token A with the synchronous Handshake Token B.</p>
-                    <div class="code-box"><strong>Opaque Network OUTPUT | Size: ${data.len_out} bytes (Overhead: +118 bytes) :</strong><br>{ "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}" }, "crypto_payload": { "algorithm": "Geometric-Manifold-Shield-8D", "r_coefficient": <span>${data.r}</span>, "v_vector_b64": "${data.v}", "handshake_tokens": { "token_a_emission": "${data.token_a}", "token_b_reception": "${data.token_b}" } } }</div>
-                </div>
-                <div class="flow-step">
-                    <h4>Step 3: Interbank Network Transit</h4>
-                    <p>The packet transits across clearing networks (SWIFT/SIA). Technical routing elements remain readable for switches, but the 8-dimensional financial payload is entirely encrypted.</p>
-                </div>
-                <div class="flow-step">
-                    <h4>Step 4: Reception & Internal Routing (At ${data.banque_dest})</h4>
-                    <p>The receiving clearing terminal intercepts the packet and routes the raw JSON structure straight to its local <code>secure_crypto</code> container.</p>
-                </div>
-                <div class="flow-step">
-                    <h4>Step 5: Decryption & Core Banking Restoration</h4>
-                    <p>The receiving cryptographic core validates its local license, applies geometric matrix inversion using the combined tokens, and restores the original transaction with perfect integrity.</p>
-                    <div class="code-box"><strong>Final OUTPUT (Delivered to receiving Core Banking):</strong><br>✅ [SUCCESS ${data.banque_dest}] Inversion verified. ISO 20022 financial payload 100% restored in plaintext with anti-replay and anti-spoofing integrity.</div>
-                </div>
-            `;
+    function lancerSimulation(cible) {
+        document.querySelectorAll('.btn-demo').forEach(btn => btn.classList.remove('active'));
+        if(event && event.target) {
+            event.target.classList.add('active');
         }
 
-        document.addEventListener("DOMContentLoaded", () => lancerSimulation('BNP'));
+        const data = simulations[cible];
+        const container = document.getElementById('flow-display');
+        
+        container.innerHTML = `
+            <div class="flow-step">
+                <h4>Step 1: Core Banking Initialization (BARCLAYS)</h4>
+                <p>The client approves a 250,000.00 EUR transfer. The central ledger generates the regulatory ISO 20022 <code>pacs.008</code> or <code>pacs.009</code> financial message.</p>
+                <div class="code-box"><strong>Local INPUT | Size: \${data.len_in} bytes :</strong><br>{ "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "\${data.bic_dest}" }, "credit_transfer": { "end_to_end_id": "E2E-1442188", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } } }</div>
+            </div>
+            <div class="flow-step">
+                <h4>Step 2: Hardening via SECURE_CRYPTO Gateway (At Barclays)</h4>
+                <p>The core binary derives the 14 channel coefficients and translates the message into an <strong>8-dimensional</strong> continuous vector, combining local RAM Token A with the synchronous Handshake Token B.</p>
+                <div class="code-box"><strong>Opaque Network OUTPUT | Size: \${data.len_out} bytes (Overhead: +118 bytes) :</strong><br>{ "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "\${data.bic_dest}" }, "crypto_payload": { "algorithm": "Geometric-Manifold-Shield-8D", "r_coefficient": <span>\${data.r}</span>, "v_vector_b64": "\${data.v}", "handshake_tokens": { "token_a_emission": "\${data.token_a}", "token_b_reception": "\${data.token_b}" } } }</div>
+            </div>
+            <div class="flow-step">
+                <h4>Step 3: Interbank Network Transit</h4>
+                <p>The packet transits across clearing networks (SWIFT/SIA). Technical routing elements remain readable for switches, but the 8-dimensional financial payload is entirely encrypted.</p>
+            </div>
+            <div class="flow-step">
+                <h4>Step 4: Reception & Internal Routing (At \${data.banque_dest})</h4>
+                <p>The receiving clearing terminal intercepts the packet and routes the raw JSON structure straight to its local <code>secure_crypto</code> container.</p>
+            </div>
+            <div class="flow-step">
+                <h4>Step 5: Decryption & Core Banking Restoration</h4>
+                <p>The receiving cryptographic core validates its local license, applies geometric matrix inversion using the combined tokens, and restores the original transaction with perfect integrity.</p>
+                <div class="code-box"><strong>Final OUTPUT (Delivered to receiving Core Banking):</strong><br>✅ [SUCCESS \${data.banque_dest}] Inversion verified. ISO 20022 financial payload 100% restored in plaintext with anti-replay and anti-spoofing integrity.</div>
+            </div>
+        `;
+    }
 
-        // INTERCEPTION & ASYNCHRONOUS STORAGE FOR PIPELINE
-        document.getElementById('form-bank-step-1').addEventListener('submit', async function(event) {
-            event.preventDefault();
-            const btn = document.getElementById('btn-bank-1');
-            btn.innerText = "Processing Authorization...";
-            btn.disabled = true;
+    document.addEventListener("DOMContentLoaded", () => lancerSimulation('BNP'));
 
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
+    // INTERCEPTION & ASYNCHRONOUS STORAGE FOR PIPELINE
+    document.getElementById('form-bank-step-1').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const btn = document.getElementById('btn-bank-1');
+        btn.innerText = "Processing Authorization...";
+        btn.disabled = true;
 
-            // Save contact details to pass to Step 2
-            localStorage.setItem('bank_email', data.email);
-            localStorage.setItem('bank_phone', data.phone);
-            localStorage.setItem('bank_name', data.name);
-            localStorage.setItem('bank_institution', data.institution);
-            try {
-                await fetch("https://formspree.io/f/mzepgojb", {
-                    method: "POST",
-                    body: JSON.stringify(data),
-                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
-                });
-                // REDIRECTION CORRIGÉE VERS LE COMPOSANT ANGLAIS
-                window.location.href = "integration_charter_signature.html";
-            } catch (error) {
-                window.location.href = "integration_charter_signature.html";
-            }
-        });
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        // Save contact details to pass to Step 2
+        localStorage.setItem('bank_email', data.email);
+        localStorage.setItem('bank_phone', data.phone);
+        localStorage.setItem('bank_name', data.name);
+        localStorage.setItem('bank_institution', data.institution);
+        
+        try {
+            await fetch("https://formspree.io/f/mzepgojb", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+            });
+            window.location.href = "integration_charter_signature.html";
+        } catch (error) {
+            window.location.href = "integration_charter_signature.html";
+        }
+    });
     </script>
+
 </body>
 </html>
