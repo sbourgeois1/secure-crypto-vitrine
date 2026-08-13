@@ -87,88 +87,6 @@
         </form>
     </section>
 
-    <script>
-        const simulations = {
-            BNP: {
-                banque_dest: "BNP PARIBAS",
-                bic_dest: "BNPAFRPPXXX",
-                token_a: "a7b3c2d5e6f890ab",
-                token_b: "b9e4f3a2c1d098ef",
-                len_in: "324",
-                len_out: "442",
-                r: "0.3542",
-                v: "Yt4TJ1V6zD+bBri4kZvQP0FpT9gELd..."
-            },
-            ING: {
-                banque_dest: "ING GROEP",
-                bic_dest: "INGBNL2AXXX",
-                token_a: "f8e2d1c9b8a765cd",
-                token_b: "c3d2e1f0a9b87654",
-                len_in: "324",
-                len_out: "442",
-                r: "0.7814",
-                v: "K9pLM2N4xZ+qWrs5tYvBN0PlK8mNDf..."
-            }
-        };
-
-        function lancerSimulation(cible) {
-            document.querySelectorAll('.btn-demo').forEach(btn => btn.classList.remove('active'));
-            if(event && event.target) {
-                event.target.classList.add('active');
-            }
-
-            const data = simulations[cible];
-            const container = document.getElementById('flow-display');
-            
-            container.innerHTML = `
-                <div class="flow-step">
-                    <h4>Étape 1 : Initialisation dans le Core Banking (BARCLAYS)</h4>
-                    <p>Le client valide un virement de 250 000,00 EUR. Le système central génère le message réglementaire ISO 20022 <code>pacs.008</code> ou <code>pacs.009</code>.</p>
-                    <div class="code-box"><strong>INPUT local (ESB Barclays) | Taille : ${data.len_in} octets :</strong><br>{
-  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260807-001" },
-  "credit_transfer": { "end_to_end_id": "E2E-1442188", "dbtr_nm": "Client Émetteur", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } }
-}</div>
-                </div>
-
-                <div class="flow-step">
-                    <h4>Étape 2 : Chiffrement par la Passerelle SECURE_CRYPTO (Chez Barclays)</h4>
-                    <p>L'ESB interne pousse le flux vers le conteneur. Le cœur binaire dérive les 14 coefficients du canal et traduit le message sous forme de vecteur à <strong>8 dimensions</strong> enrichi du double jeton du Handshake synchrone.</p>
-                    <div class="code-box"><strong>OUTPUT Réseau opaque | Taille : ${data.len_out} octets (Aucune surcharge) :</strong><br>{
-  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260807-001" },
-  "crypto_payload": { 
-    "algorithm": "Geometric-Manifold-Shield", 
-    "r_coefficient": <span>${data.r}</span>, 
-    "v_vector_b64": "${data.v}", 
-    "handshake_tokens": {
-      "token_a_emission": <em>"${data.token_a}"</em>,
-      "token_b_reception": <em>"${data.token_b}"</em>
-    }
-  }
-}</div>
-                </div>
-
-                <div class="flow-step">
-                    <h4>Étape 3 : Transit Réseau Interbancaire</h4>
-                    <p>Le message transite sur le réseau de compensation (SWIFT/SIA). L'en-tête technique reste lisible pour les aiguillages, mais la charge utile financière à 8 dimensions est indéchiffrable et immunisée contre toute interception.</p>
-                </div>
-
-                <div class="flow-step">
-                    <h4>Étape 4 : Réception et Routage Interne (Chez ${data.banque_dest})</h4>
-                    <p>Le routeur d'infrastructure de la banque réceptrice intercepte le paquet et transmet la structure JSON brute directement à sa boîte noire locale <code>secure_crypto</code>.</p>
-                    <div class="code-box"><strong>INPUT local (Boîte Noire destinataire) | Taille : ${data.len_out} octets :</strong><br>Identique à l'OUTPUT réseau de l'étape 2. Les jetons éphémères transitent pour aligner la reconstruction géométrique.</div>
-                </div>
-                <div class="flow-step">
-                    <h4>Étape 5 : Déchiffrement et Restauration Core Banking</h4>
-                    <p>Le cœur binaire de la banque réceptrice valide sa licence locale, applique l'inversion géométrique sur les jetons combinés et restitue le document d'origine avec intégrité.</p>
-                    <div class="code-box"><strong>OUTPUT final (Délivré au Core Banking destinataire) :</strong><br>✅ [SUCCÈS ${data.banque_dest}] Inversion réussie. Message financier ISO 20022 restauré en clair à 100% avec intégrité anti-rejeu et anti-spoofing. Prêt pour l'inscription au grand livre.</div>
-                </div>
-            `;
-        }
-
-        // Lancement par défaut au chargement de la page
-        document.addEventListener("DOMContentLoaded", () => lancerSimulation('BNP'));
-    </script>
-
     <!-- SECTION CONTACT D'ORIGINE RESTAURÉE -->
     <section class="contact-section" id="contact">
         <h2>Planifier un Atelier Technique (15 min)</h2>
@@ -185,41 +103,120 @@
             <button type="submit" class="btn" id="btn-bank-1" style="width: 100%;">Demander l'accès à l'atelier technique & Passer à l'Étape 2</button>
         </form>
 
-        <script>
-            document.getElementById('form-bank-step-1').addEventListener('submit', async function(event) {
-                event.preventDefault();
-                const btn = document.getElementById('btn-bank-1');
-                btn.innerText = "Traitement de l'autorisation...";
-                btn.disabled = true;
-
-                const formData = new FormData(this);
-                const data = Object.fromEntries(formData.entries());
-
-                // Sauvegarde temporaire des coordonnées bancaires
-                localStorage.setItem('bank_email', data.email);
-                localStorage.setItem('bank_phone', data.phone);
-                localStorage.setItem('bank_name', data.name);
-                localStorage.setItem('bank_institution', data.institution);
-
-                try {
-                    // METTRE VOTRE NOUVEL ID FORMSPREE BANQUE ICI
-                    await fetch("https://formspree.io/f/mzepgojb", {
-                        method: "POST",
-                        body: JSON.stringify(data),
-                        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
-                    });
-                    window.location.href = "cahier_des_charges_signature.html";
-                } catch (error) {
-                    window.location.href = "cahier_des_charges_signature.html";
-                }
-            });
-        </script>
-
     </section>
 
     <footer>
         <p>&copy; 2026 secure_crypto. Tous droits réservés. Classification : Confidentiel Banque.</p>
     </footer>
+
+    <script>
+    const simulations = {
+        BNP: {
+            banque_dest: "BNP PARIBAS",
+            bic_dest: "BNPAFRPPXXX",
+            token_a: "a7b3c2d5e6f890ab",
+            token_b: "b9e4f3a2c1d098ef",
+            len_in: "324",
+            len_out: "442",
+            r: "0.3542",
+            v: "Yt4TJ1V6zD+bBri4kZvQP0FpT9gELd..."
+        },
+        ING: {
+            banque_dest: "ING GROEP",
+            bic_dest: "INGBNL2AXXX",
+            token_a: "f8e2d1c9b8a765cd",
+            token_b: "c3d2e1f0a9b87654",
+            len_in: "324",
+            len_out: "442",
+            r: "0.7814",
+            v: "K9pLM2N4xZ+qWrs5tYvBN0PlK8mNDf..."
+        }
+    };
+
+    function lancerSimulation(cible) {
+        document.querySelectorAll('.btn-demo').forEach(btn => btn.classList.remove('active'));
+        if(event && event.target) {
+            event.target.classList.add('active');
+        }
+
+        const data = simulations[cible];
+        const container = document.getElementById('flow-display');
+        
+        container.innerHTML = `
+            <div class="flow-step">
+                <h4>Étape 1 : Initialisation dans le Core Banking (BARCLAYS)</h4>
+                <p>Le client valide un virement de 250 000,00 EUR. Le système central génère le message réglementaire ISO 20022 <code>pacs.008</code> ou <code>pacs.009</code>.</p>
+                <div class="code-box"><strong>INPUT local (ESB Barclays) | Taille : ${data.len_in} octets :</strong><br>{
+                  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260807-001" },
+                  "credit_transfer": { "end_to_end_id": "E2E-1442188", "dbtr_nm": "Client Émetteur", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } }
+                }</div>
+            </div>
+
+            <div class="flow-step">
+                <h4>Étape 2 : Chiffrement par la Passerelle SECURE_CRYPTO (Chez Barclays)</h4>
+                <p>L'ESB interne pousse le flux vers le conteneur. Le cœur binaire dérive les 14 coefficients du canal et traduit le message sous forme de vecteur à <strong>8 dimensions</strong> enrichi du double jeton du Handshake synchrone.</p>
+                <div class="code-box"><strong>OUTPUT Réseau opaque | Taille : ${data.len_out} octets (Aucune surcharge) :</strong><br>{
+                  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260807-001" },
+                  "crypto_payload": { 
+                    "algorithm": "Geometric-Manifold-Shield", 
+                    "r_coefficient": <span>${data.r}</span>, 
+                    "v_vector_b64": "${data.v}", 
+                    "handshake_tokens": {
+                      "token_a_emission": <em>"${data.token_a}"</em>,
+                      "token_b_reception": <em>"${data.token_b}"</em>
+                    }
+                  }
+                }</div>
+            </div>
+
+            <div class="flow-step">
+                <h4>Étape 3 : Transit Réseau Interbancaire</h4>
+                <p>Le message transite sur le réseau de compensation (SWIFT/SIA). L'en-tête technique reste lisible pour les aiguillages, mais la charge utile financière à 8 dimensions est indéchiffrable et immunisée contre toute interception.</p>
+            </div>
+
+            <div class="flow-step">
+                <h4>Étape 4 : Réception et Routage Interne (Chez ${data.banque_dest})</h4>
+                <p>Le routeur d'infrastructure de la banque réceptrice intercepte le paquet et transmet la structure JSON brute directement à sa boîte noire locale <code>secure_crypto</code>.</p>
+                <div class="code-box"><strong>INPUT local (Boîte Noire destinataire) | Taille : ${data.len_out} octets :</strong><br>Identique à l'OUTPUT réseau de l'étape 2. Les jetons éphémères transitent pour aligner la reconstruction géométrique.</div>
+            </div>
+            <div class="flow-step">
+                <h4>Étape 5 : Déchiffrement et Restauration Core Banking</h4>
+                <p>Le cœur binaire de la banque réceptrice valide sa licence locale, applique l'inversion géométrique sur les jetons combinés et restitue le document d'origine avec intégrité.</p>
+                <div class="code-box"><strong>OUTPUT final (Délivré au Core Banking destinataire) :</strong><br>✅ [SUCCÈS ${data.banque_dest}] Inversion réussie. Message financier ISO 20022 restauré en clair à 100% avec intégrité anti-rejeu et anti-spoofing. Prêt pour l'inscription au grand livre.</div>
+            </div>
+        `;
+    }
+
+    // Lancement par défaut au chargement de la page
+    document.addEventListener("DOMContentLoaded", () => lancerSimulation('BNP'));
+    // INTERCEPTION & ASYNCHRONOUS STORAGE FOR PIPELINE
+    document.getElementById('form-bank-step-1').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const btn = document.getElementById('btn-bank-1');
+        btn.innerText = "Traitement de l'autorisation...";
+        btn.disabled = true;
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        // Sauvegarde temporaire des coordonnées bancaires
+        localStorage.setItem('bank_email', data.email);
+        localStorage.setItem('bank_phone', data.phone);
+        localStorage.setItem('bank_name', data.name);
+        localStorage.setItem('bank_institution', data.institution);
+
+        try {
+            await fetch("https://formspree.io/f/mzepgojb", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+            });
+            window.location.href = "cahier_des_charges_signature.html";
+        } catch (error) {
+            window.location.href = "cahier_des_charges_signature.html";
+        }
+    });
+    </script>
 
 </body>
 </html>
