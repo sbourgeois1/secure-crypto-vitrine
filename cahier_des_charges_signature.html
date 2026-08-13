@@ -4,7 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>secure_crypto - Approbation du Cadre d'Intégration Interbancaire</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <style> 
+        <!--  Le fond de la page entière : bleu nuit profond et texturé  -->
+        body {
+            background-color: #0f172a; /* Bleu ardoise de la palette Tailwind, beaucoup plus lumineux que le noir */
+            color: #f8fafc; /* Texte blanc cassé très lisible */
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        /* Le conteneur du formulaire (la boîte) */
+        .form-container {
+            background: #1e293b; /* Fond de boîte gris-bleu surélevé */
+            border: 1px solid #334155; /* Bordures nettes et visibles */
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+
 </head>
 <body>
     <header>
@@ -57,7 +74,7 @@
 
             <div style="margin-bottom: 15px;">
                 <label style="display: block; margin-bottom: 5px; font-size: 0.9rem; color: #fff;">Signature légale (Saisissez votre Nom Complet & Institution) :</label>
-                <input type="text" name="legal_signature" placeholder="Je soussigné, [Nom], agissant pour le compte de [Banque], accepte les termes" required style="width: 100%; padding: 12px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
+                <input type="text" name="legal_signature" placeholder="Je soussigné, [Nom], agissant pour le compte de [Banque], accepte les termes" required style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #475569; color: #fff; border-radius: 4px;">
             </div>
 
             <div style="margin-bottom: 25px; display: flex; align-items: flex-start; gap: 10px;">
@@ -65,7 +82,7 @@
                 <label for="agreement" style="font-size: 0.88rem; color: var(--text-muted); cursor: pointer;">Je certifie disposer de l'autorité requise pour engager mon institution dans cette phase d'audit technique.</label>
             </div>
 
-            <button type="submit" class="btn" id="btn-bank-2" style="width: 100%; background: #00ff87; color: #050913; font-weight: bold; margin-bottom: 15px;">Valider la Signature de Conformité & Recevoir la Sandbox</button>
+            <button type="submit" class="btn" id="btn-bank-2" style="width: 100%; background: #00ff87; color: #0f172a; font-weight: bold; margin-bottom: 15px;">Valider la Signature de Conformité & Recevoir la Sandbox</button>
             <a href="index.html" class="btn" style="display: block; text-align: center; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid #1e293b; text-decoration: none; padding: 10px 0; border-radius: 4px;">◀ Retour à l'accueil</a>
         </form>
     </section>

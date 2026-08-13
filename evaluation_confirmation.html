@@ -2,30 +2,28 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>secure_crypto - Demande d'Évaluation Enregistrée</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Spécifications Validées - SECURE_CRYPTO</title>
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 40px; max-width: 550px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); }
+        .badge { background: rgba(34, 197, 94, 0.1); color: #4ade80; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; border: 1px solid rgba(34, 197, 94, 0.3); display: inline-block; margin-bottom: 20px; }
+        h1 { margin: 0 0 15px 0; font-size: 1.8rem; }
+        p { color: #94a3b8; line-height: 1.6; font-size: 0.95rem; margin-bottom: 30px; }
+        .btn-fin { display: inline-block; background: #00ff87; color: #0f172a; font-weight: bold; text-decoration: none; padding: 12px 24px; border-radius: 4px; transition: background 0.2s; }
+        .btn-fin:hover { background: #00cc6a; }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">secure<span>_crypto</span></div>
-        <div class="tagline" style="color: #00ff87; font-weight: bold; font-size: 0.9rem; letter-spacing: 1px;">DIVISION COMPENSATION INTERBANCAIRE</div>
-    </header>
 
-    <section style="max-width: 650px; margin: 60px auto; background: rgba(10, 15, 29, 0.9); border: 1px solid var(--border); border-radius: 8px; padding: 50px; text-align: center;">
-        <div style="font-size: 4rem; color: #00ff87; margin-bottom: 20px;">✓</div>
-        <h2>Signature de Conformité Enregistrée</h2>
-        <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6;">
-            L'approbation technique de votre institution a été logguée avec succès au cœur de notre registre d'audit réglementaire.
+    <div class="card">
+        <div class="badge">✓ AUDIT SIGNÉ NUMÉRIQUEMENT</div>
+        <h1>Configuration Enregistrée</h1>
+        <p>Le Cahier des Charges de l'infrastructure <strong>SECURE_CRYPTO (v5.3)</strong> a été signé avec succès. Vos conteneurs de simulation locale et vos clés d'accès à la Sandbox interbancaire ont été générés.</p>
+        <p style="font-size: 0.85rem; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 4px; border-left: 3px solid #00ff87;">
+            📧 Un e-mail de déploiement automatisé contenant vos jetons API temporaires vient d'être envoyé à l'adresse de votre institution.
         </p>
-        <div style="background: #050913; border: 1px solid #1e293b; padding: 20px; border-radius: 6px; margin: 30px 0; text-align: left; font-size: 0.95rem;">
-            <h4 style="margin-top: 0; color: #00ff87; text-transform: uppercase;">Prochaines étapes de validation :</h4>
-            <ol style="padding-left: 20px; margin-bottom: 0; line-height: 1.8;">
-                <li><strong>Vérification des accès :</strong> Les architectures déclarées (ESB/Kafka) sont auditées pour valider l'isolation.</li>
-                <li><strong>Envoi du Jeton d'Évaluation :</strong> Un e-mail contenant votre jeton crypté unique d'accès à la Sandbox d'évaluation vous sera transmis sous 24 heures par notre ingénieur principal (Dr. Ir. Bourgeois).</li>
-            </ol>
-        </div>
-        <a href="index.html" class="btn" style="margin-top: 20px; display: inline-block;">Retour à l'accueil</a>
-    </section>
+        <a href="index.html" class="btn-fin">Retourner au Tableau de Bord</a>
+    </div>
+
 </body>
 </html>

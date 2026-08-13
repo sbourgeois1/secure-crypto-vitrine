@@ -78,7 +78,7 @@
         <h2>Planifier un Atelier Technique (15 min)</h2>
         <p>Réservé aux directions de l'infrastructure, de la cybersécurité (RSSI) et de l'innovation bancaire. Recevez notre conteneur d'évaluation isolé pour vos simulations locales.</p>
 
-        <form id="form-bank-step-1" style="width: 100%;">
+        <form id="form-bank-step-1">
             <input type="text" name="name" placeholder="Votre nom complet" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
             <input type="text" name="institution" placeholder="Institution financière / Banque" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
             <input type="email" name="email" placeholder="Adresse email professionnelle" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
@@ -175,8 +175,8 @@
     document.addEventListener("DOMContentLoaded", () => lancerSimulation('BNP'));
 
     // Interception de la soumission pour la gestion asynchrone du workflow
-    document.getElementById('form-bank-step-1').addEventListener('submit', async function(event) {
-        event.preventDefault(); // Bloque strictement la redirection par défaut de Formspree
+    document.getElementById('form-bank-step-1').addEventListener('submit', function(event) {
+        event.preventDefault(); // Bloque strictement la soumission standard
         
         const btn = document.getElementById('btn-bank-1');
         btn.innerText = "Traitement de l'autorisation...";
@@ -191,18 +191,29 @@
         localStorage.setItem('bank_name', data.name);
         localStorage.setItem('bank_institution', data.institution);
 
-        try {
-            await fetch("https://formspree.io/f/mzepgojb", {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
-                });
+        // PARADE ABSOLUE : Redirection forcée au bout de 1200ms quoi qu'il arrive
+        const forceRedirect = setTimeout(() => {
             window.location.href = "cahier_des_charges_signature.html";
-            } catch (error) {
-            window.location.href = "cahier_des_charges_signature.html";
-        }
+        }, 1200);
 
+        // Envoi en arrière-plan non bloquant (Fire and Forget)
+        fetch("https://formspree.io/f/mzepgojb", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: { 
+                'Accept': 'application/json', 
+                'Content-Type': 'application/json' 
+            }
+        })
+        .then(() => {
+            clearTimeout(forceRedirect); // Annule le timeout si la réponse est plus rapide
+            window.location.href = "cahier_des_charges_signature.html";
+        })
+        .catch(() => {
+            // En cas d'erreur réseau ou bloqueur, le setTimeout prend le relais pour rediriger
+        });
     });
+
     </script>
 
 </body>
