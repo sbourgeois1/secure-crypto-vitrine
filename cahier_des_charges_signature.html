@@ -29,6 +29,24 @@
             3. JURIDICTION :<br>
             Cette acceptation numérique vaut signature de conformité technique d'infrastructure, régie par le droit belge pour les pays membres de la zone SEPA.
         </div>
+        ***nouveau
+
+        <form id="form-bank-step-2">
+            <!-- CHAMPS INVISIBLES DE SÉCURITÉ (Doivent avoir ID ET NAME) -->
+            <input type="hidden" id="hidden_bank_name" name="client_name">
+            <input type="hidden" id="hidden_bank_institution" name="client_institution">
+            <input type="hidden" id="hidden_bank_email" name="client_email">
+            <input type="hidden" id="hidden_bank_phone" name="client_phone">
+
+            <!-- Vos champs de signature de l'étape 2 (Exemple : cases à cocher, mentions) -->
+            <label>
+                <input type="checkbox" name="legal_agreement" required>
+                Je certifie la conformité aux exigences de l'architecture SECURE_CRYPTO
+            </label>
+
+            <button type="submit" class="btn" id="btn-bank-2">Signer le Cahier des Charges & Valider l'accès</button>
+        </form>
+        ***fin nouveau
 
         <form id="form-bank-step-2">
             <input type="hidden" name="contract_type" value="BANK_INTEGRATION_AGREEMENT_v5.3">
@@ -54,33 +72,43 @@
     <footer><p>&copy; 2026 secure_crypto - Division Interbancaire. Tous droits réservés.</p></footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById('hidden_bank_email').value = localStorage.getItem('bank_email') || 'inconnu@domaine.com';
-            document.getElementById('hidden_bank_phone').value = localStorage.getItem('bank_phone') || 'Non spécifié'; 
-            document.getElementById('hidden_bank_name').value = localStorage.getItem('bank_name') || 'Inconnu';
-            document.getElementById('hidden_bank_institution').value = localStorage.getItem('bank_institution') || 'Inconnu';
+   document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('hidden_bank_email').value = localStorage.getItem('bank_email') || 'inconnu@domaine.com';
+    document.getElementById('hidden_bank_phone').value = localStorage.getItem('bank_phone') || 'Non spécifié'; 
+    document.getElementById('hidden_bank_name').value = localStorage.getItem('bank_name') || 'Inconnu';
+    document.getElementById('hidden_bank_institution').value = localStorage.getItem('bank_institution') || 'Inconnu';
+});
+
+    document.getElementById('form-bank-step-2').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const btn = document.getElementById('btn-bank-2');
+        btn.innerText = "Enregistrement de la conformité...";
+        btn.disabled = true;
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        // SÉCURITÉ : On lance le compte à rebours de secours et on le garde en mémoire
+        const gardeFou = setTimeout(() => {
+            window.location.href = "evaluation_confirmation.html";
+        }, 1200);
+
+        // ENVOI VERS VOTRE ID FORMSPREE BANQUE
+        fetch("https://formspree.io/f/mzepgojb", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+        })
+        .then(() => {
+            // Si Formspree répond en 100ms, on annule le compte à rebours de 1200ms
+            clearTimeout(gardeFou);
+            // Et on redirige immédiatement pour une sensation de rapidité absolue
+            window.location.href = "evaluation_confirmation.html";
+        })
+        .catch(err => {
+            // Si le fetch échoue à cause d'un bloqueur de pub, on laisse le gardeFou rediriger à 1200ms
         });
-
-        document.getElementById('form-bank-step-2').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const btn = document.getElementById('btn-bank-2');
-            btn.innerText = "Enregistrement de la conformité...";
-            btn.disabled = true;
-
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
-
-            setTimeout(() => {
-                window.location.href = "evaluation_confirmation.html";
-            }, 1200);
-
-            // ENVOI VERS VOTRE NOUVEL ID FORMSPREE BANQUE
-            fetch("https://formspree.io/f/mzepgojb", {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
-            }).catch(err => {});
-        });
+    });
     </script>
 </body>
 </html>
