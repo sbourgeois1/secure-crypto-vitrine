@@ -4,25 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>secure_crypto - Post-Quantum Sovereign Shield</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 
     <header>
         <div class="logo">secure<span>_crypto</span></div>
-        <a href="index.html" class="lang-switch">Français 🌐</a>
+        <div class="tagline" style="color: #00ff87; font-weight: bold; font-size: 0.9rem; letter-spacing: 1px;">INTERBANK CLEARING DIVISION</div>
     </header>
 
     <section class="hero">
         <h1>Sovereign Shield for the Post-Quantum Era</h1>
         <p>Autonomous interbank encryption gateway, native ISO 20022 compliant, and isolated per BIC code. Protect your strategic financial flows against tomorrow's threats.</p>
-        <a href="#contact" class="btn">Book a Technical Workshop</a>
+        <a href="#workflow" class="btn">Access Evaluation Workflow</a>
     </section>
 
     <!-- INTEGRATED TECHNICAL CERTIFICATION BANNER -->
     <section class="tech-description-box" style="max-width: 1100px; margin: 40px auto; padding: 25px; background: rgba(10, 15, 29, 0.6); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,255,135,0.05);">
         <p style="text-align: justify; line-height: 1.8; font-size: 1.15rem; color: var(--text-main); margin: 0;">
-            💡 <strong>Strict security :</strong> The financial ISO 20022 message is translated into a vector within an <strong>8-dimensional space</strong> and includes <strong>2 ephemeral tokens</strong> for each transfer. This makes the encryption process unique, rendering the messages not only indecipherable but also unusable even if a decryption were to occur, including with quantum computers.
+            💡 <strong>Engineering Rigor:</strong> The financial ISO 20022 message is translated into a vector within an <strong>8-dimensional space</strong> and includes <strong>2 ephemeral tokens</strong> for each transfer. This makes the encryption process unique, rendering the messages not only indecipherable but also unusable even if a decryption were to occur, including with quantum computers.
         </p>
     </section>
 
@@ -58,7 +58,7 @@
         </div>
     </main>
 
-    <!-- INTERACTIVE SYMMETRICAL DEMONSTRATION SECTION -->
+    <!-- INTERACTIVE SYMRETRICAL DEMONSTRATION SECTION -->
     <section class="demo-section" id="demo">
         <h2 style="text-align: center; margin-top: 0;">Interactive Interbank Flow Demonstration</h2>
         <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">Select a transfer scenario to visualize routing, network payload sizes, and real-time validation of the double-token Handshake.</p>
@@ -73,23 +73,33 @@
         </div>
     </section>
 
-    <!-- SECURE CONTACT SECTION -->
-    <section class="contact-section" id="contact">
-        <h2>Schedule a Technical Workshop (15 min)</h2>
-        <p>Discover our local ISO 20022 runtime simulator and validate our black-box integration with your infrastructure engineers.</p>
-        
-        <!-- Secure form submission via Formspree -->
-        <form action="https://formspree.io" method="POST">
-            <input type="text" name="name" placeholder="Your Full Name" required>
-            <input type="text" name="institution" placeholder="Financial Institution / Bank" required>
-            <input type="email" name="email" placeholder="Professional Email Address" required>
-            <textarea name="message" rows="5" placeholder="Your message or availability" required></textarea>
-            <button type="submit">Request Workshop Access</button>
-        </form>
+    <!-- AUTOMATED ACQUISITION WORKFLOW SECTION -->
+    <section class="contact-section" id="workflow" style="background: rgba(10, 15, 29, 0.8); padding: 50px 20px; border-top: 1px solid var(--border);">
+        <h2 style="text-align: center;">Evaluation Package Access Request</h2>
+        <p style="text-align: center; max-width: 700px; margin: 0 auto 40px auto; color: var(--text-muted);">
+            Follow our secure pipeline to receive your containerized local simulation package (isolated Docker Sandbox) for offline architecture evaluation.
+        </p>
+
+        <div style="max-width: 600px; margin: 0 auto; background: rgba(5, 9, 19, 0.6); padding: 30px; border-radius: 8px; border: 1px solid var(--border);">
+            <h3 style="margin-top: 0; color: #00ff87;">Step 1: Request Technical Workshop</h3>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px;">Reserved for Infrastructure Directions, CISOs, and Banking Innovation Committees.</p>
+            
+            <form id="form-bank-step-1" style="width: 100%;">
+                <input type="text" name="name" placeholder="Your Full Name" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
+                <input type="text" name="institution" placeholder="Financial Institution / Bank" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
+                <input type="email" name="email" placeholder="Professional Email Address" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
+                
+                <!-- ENRICHED PHONE NUMBER FIELD -->
+                <input type="tel" name="phone" placeholder="Direct Phone Number" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
+                
+                <textarea name="message" rows="4" placeholder="Specify your core infrastructure constraints (Kafka, MQ, ESB...)" required style="width: 100%; padding: 10px; margin-bottom: 20px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px; font-family: inherit;"></textarea>
+                <button type="submit" class="btn" id="btn-bank-1" style="width: 100%;">Request Workshop Access & Proceed to Step 2</button>
+            </form>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 secure_crypto. All rights reserved. Classification: Bank Confidential.</p>
+        <p>&copy; 2026 secure_crypto - Interbank Clearing Division. All rights reserved. Classification: Bank Confidential.</p>
     </footer>
 
     <script>
@@ -129,50 +139,62 @@
                 <div class="flow-step">
                     <h4>Step 1: Core Banking Initialization (BARCLAYS)</h4>
                     <p>The client approves a 250,000.00 EUR transfer. The central ledger generates the regulatory ISO 20022 <code>pacs.008</code> or <code>pacs.009</code> financial message.</p>
-                    <div class="code-box"><strong>Local INPUT (Barclays ESB) | Size: ${data.len_in} bytes :</strong><br>{
-  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260807-001" },
-  "credit_transfer": { "end_to_end_id": "E2E-1442188", "dbtr_nm": "Sender Client", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } }
-}</div>
+                    <div class="code-box"><strong>Local INPUT | Size: ${data.len_in} bytes :</strong><br>{ "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}" }, "credit_transfer": { "end_to_end_id": "E2E-1442188", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } } }</div>
                 </div>
-
                 <div class="flow-step">
                     <h4>Step 2: Hardening via SECURE_CRYPTO Gateway (At Barclays)</h4>
-                    <p>The internal ESB forwards the stream to the container. The compiled core derives the 14 channel-specific coefficients and translates the message into an <strong>8-dimensional</strong> vector enriched with the synchronous Handshake token pair.</p>
-                    <div class="code-box"><strong>Opaque Network OUTPUT | Size: ${data.len_out} bytes (No bandwidth overhead) :</strong><br>{
-  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260807-001" },
-  "crypto_payload": { 
-    "algorithm": "Geometric-Manifold-Shield", 
-    "r_coefficient": <span>${data.r}</span>, 
-    "v_vector_b64": "${data.v}", 
-    "handshake_tokens": {
-      "token_a_emission": <em>"${data.token_a}"</em>,
-      "token_b_reception": <em>"${data.token_b}"</em>
-    }
-  }
-}</div>
+                    <p>The core binary derives the 14 channel coefficients and translates the message into an <strong>8-dimensional</strong> continuous vector, combining local RAM Token A with the synchronous Handshake Token B.</p>
+                <div class="flow-step">
+                    <h4>Step 2: Hardening via SECURE_CRYPTO Gateway (At Barclays)</h4>
+                    <p>The core binary derives the 14 channel coefficients and translates the message into an <strong>8-dimensional</strong> continuous vector, combining local RAM Token A with the synchronous Handshake Token B.</p>
+                    <div class="code-box"><strong>Opaque Network OUTPUT | Size: ${data.len_out} bytes (Overhead: +118 bytes) :</strong><br>{ "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}" }, "crypto_payload": { "algorithm": "Geometric-Manifold-Shield-8D", "r_coefficient": <span>${data.r}</span>, "v_vector_b64": "${data.v}", "handshake_tokens": { "token_a_emission": "${data.token_a}", "token_b_reception": "${data.token_b}" } } }</div>
                 </div>
-
                 <div class="flow-step">
                     <h4>Step 3: Interbank Network Transit</h4>
-                    <p>The packet transits across clearing networks (SWIFT/SIA). Technical routing elements remain readable for switches, but the 8-dimensional financial payload is entirely encrypted and immune to any interception.</p>
+                    <p>The packet transits across clearing networks (SWIFT/SIA). Technical routing elements remain readable for switches, but the 8-dimensional financial payload is entirely encrypted.</p>
                 </div>
-
                 <div class="flow-step">
                     <h4>Step 4: Reception & Internal Routing (At ${data.banque_dest})</h4>
                     <p>The receiving clearing terminal intercepts the packet and routes the raw JSON structure straight to its local <code>secure_crypto</code> container.</p>
-                    <div class="code-box"><strong>Local INPUT (Receiving Black Box) | Size: ${data.len_out} bytes :</strong><br>Identique to Step 2 network OUTPUT. Ephemeral tokens transit to allow exact geometric matrix realignment.</div>
                 </div>
-
                 <div class="flow-step">
                     <h4>Step 5: Decryption & Core Banking Restoration</h4>
                     <p>The receiving cryptographic core validates its local license, applies geometric matrix inversion using the combined tokens, and restores the original transaction with perfect integrity.</p>
-                    <p>The receiving cryptographic core validates its local license, applies geometric matrix inversion using the combined tokens, and restores the original transaction with perfect integrity.</p>
-                    <div class="code-box"><strong>Final OUTPUT (Delivered to receiving Core Banking):</strong><br>✅ [SUCCESS ${data.banque_dest}] Inversion verified. ISO 20022 financial payload 100% restored in plaintext with anti-replay and anti-spoofing integrity. Ready for ledger execution.</div>
+                    <div class="code-box"><strong>Final OUTPUT (Delivered to receiving Core Banking):</strong><br>✅ [SUCCESS ${data.banque_dest}] Inversion verified. ISO 20022 financial payload 100% restored in plaintext with anti-replay and anti-spoofing integrity.</div>
                 </div>
             `;
         }
 
         document.addEventListener("DOMContentLoaded", () => lancerSimulation('BNP'));
+
+        // INTERCEPTION & ASYNCHRONOUS STORAGE FOR PIPELINE
+        document.getElementById('form-bank-step-1').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btn-bank-1');
+            btn.innerText = "Processing Authorization...";
+            btn.disabled = true;
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            // Save contact details to pass to Step 2
+            localStorage.setItem('bank_email', data.email);
+            localStorage.setItem('bank_phone', data.phone);
+            localStorage.setItem('bank_name', data.name);
+            localStorage.setItem('bank_institution', data.institution);
+            ***
+            try {
+                await fetch("https://formspree.io", {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+                });
+                // REDIRECTION CORRIGÉE VERS LE COMPOSANT ANGLAIS
+                window.location.href = "integration_charter_signature.html";
+            } catch (error) {
+                window.location.href = "integration_charter_signature.html";
+            }
+        });
     </script>
 </body>
 </html>

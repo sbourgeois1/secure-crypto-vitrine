@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>secure_crypto - Approbation du Cadre d'Intégration Interbancaire</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">secure<span>_crypto</span></div>
+        <div class="tagline" style="color: #00ff87; font-weight: bold; font-size: 0.9rem; letter-spacing: 1px;">DIVISION COMPENSATION INTERBANCAIRE</div>
+    </header>
+
+    <section style="max-width: 800px; margin: 40px auto; background: rgba(10, 15, 29, 0.9); border: 1px solid var(--border); border-radius: 8px; padding: 40px;">
+        <div style="text-align: center; margin-bottom: 30px; font-weight: bold; color: var(--accent);">ÉTAPE 2 DE 3 : CONFORMITÉ AU CAHIER DES CHARGES INTERBANCAIRE</div>
+        <h2>Approbation de l'Architecture de Livraison (Grade DORA)</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px;">Veuillez confirmer votre accord avec les conditions d'audit de la boîte noire Stateless avant le déploiement de l'évaluation.</p>
+
+        <div style="max-height: 300px; overflow-y: scroll; background-color: #0b0f1d; border: 1px solid #00ff87; padding: 20px; border-radius: 6px; font-family: monospace; font-size: 0.95rem; line-height: 1.6; color: #00ff87; margin-bottom: 25px; text-align: justify;">
+            CADRE CONTRAT D'ÉVALUATION INTERBANCAIRE ISO 20022<br>
+            --------------------------------------------------<br>
+            PROJET : Passerelle secure_crypto Multi-Tenant v5.3.0<br>
+            CONFORMITÉ : Audits de Résilience Opérationnelle Européenne<br><br>
+            1. RECONNAISSANCE DES PÉRIMÈTRES LOGICIELS :<br>
+            L'institution financière s'engage à tester le conteneur d'évaluation de manière isolée au sein de sa Sandbox locale. Le mode MODE_DEMO=True est requis pour les tests de validation en RAM, tandis que le mode production strict s'adossera à l'infrastructure ESB de la banque.<br><br>
+            2. ÉTANCHÉITÉ DES LICENCES SOUVERAINES :<br>
+            Le binaire s'exécute en mode Fail-Closed. Toute tentative d'exfiltration ou de modification du fichier de licence réglementaire .lic entraînera le gel automatique immédiat du pipeline cryptographique du nœud local.<br><br>
+            3. JURIDICTION :<br>
+            Cette acceptation numérique vaut signature de conformité technique d'infrastructure, régie par le droit belge pour les pays membres de la zone SEPA.
+        </div>
+
+        <form id="form-bank-step-2">
+            <input type="hidden" name="contract_type" value="BANK_INTEGRATION_AGREEMENT_v5.3">
+            <input type="hidden" id="hidden_bank_email" name="email">
+            <input type="hidden" id="hidden_bank_phone" name="phone">
+            <input type="hidden" id="hidden_bank_name" name="name">
+            <input type="hidden" id="hidden_bank_institution" name="institution">
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-size: 0.9rem; color: #fff;">Signature légale (Saisissez votre Nom Complet & Institution) :</label>
+                <input type="text" name="legal_signature" placeholder="Je soussigné, [Nom], agissant pour le compte de [Banque], accepte les termes" required style="width: 100%; padding: 12px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
+            </div>
+
+            <div style="margin-bottom: 25px; display: flex; align-items: flex-start; gap: 10px;">
+                <input type="checkbox" id="agreement" name="agreement_checked" value="YES" required style="margin-top: 4px;">
+                <label for="agreement" style="font-size: 0.88rem; color: var(--text-muted); cursor: pointer;">Je certifie disposer de l'autorité requise pour engager mon institution dans cette phase d'audit technique.</label>
+            </div>
+
+            <button type="submit" class="btn" id="btn-bank-2" style="width: 100%; background: #00ff87; color: #050913; font-weight: bold; margin-bottom: 15px;">Valider la Signature de Conformité & Recevoir la Sandbox</button>
+            <a href="index.html" class="btn" style="display: block; text-align: center; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid #1e293b; text-decoration: none; padding: 10px 0; border-radius: 4px;">◀ Retour à l'accueil</a>
+        </form>
+    </section>
+    <footer><p>&copy; 2026 secure_crypto - Division Interbancaire. Tous droits réservés.</p></footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('hidden_bank_email').value = localStorage.getItem('bank_email') || 'inconnu@domaine.com';
+            document.getElementById('hidden_bank_phone').value = localStorage.getItem('bank_phone') || 'Non spécifié'; 
+            document.getElementById('hidden_bank_name').value = localStorage.getItem('bank_name') || 'Inconnu';
+            document.getElementById('hidden_bank_institution').value = localStorage.getItem('bank_institution') || 'Inconnu';
+        });
+
+        document.getElementById('form-bank-step-2').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btn-bank-2');
+            btn.innerText = "Enregistrement de la conformité...";
+            btn.disabled = true;
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            setTimeout(() => {
+                window.location.href = "evaluation_confirmation.html";
+            }, 1200);
+
+            // ENVOI VERS VOTRE NOUVEL ID FORMSPREE BANQUE
+            fetch("https://formspree.io", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+            }).catch(err => {});
+        });
+    </script>
+</body>
+</html>
