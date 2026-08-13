@@ -77,30 +77,14 @@
     <section class="contact-section" id="contact">
         <h2>Planifier un Atelier Technique (15 min)</h2>
         <p>Réservé aux directions de l'infrastructure, de la cybersécurité (RSSI) et de l'innovation bancaire. Recevez notre conteneur d'évaluation isolé pour vos simulations locales.</p>
-        <form action="https://formspree.io/f/mzepgojb" method="POST">
-            <input type="text" name="name" placeholder="Votre nom complet" required>
-            <input type="email" name="email" placeholder="Votre adresse e-mail professionnelle" required>
-            <input type="tel" name="phone" placeholder="Numéro de téléphone direct" required>
-            <input type="text" name="institution" placeholder="Institution financière / Organisme" required>
-            <textarea name="message" rows="5" placeholder="Précisez vos contraintes d'infrastructure (Kafka, MQ, ESB...)" required></textarea>
-            <button type="submit" class="btn">Demander le Package d'Évaluation</button>
-        </form>
-    </section>
 
-    <!-- SECTION CONTACT D'ORIGINE RESTAURÉE -->
-    <section class="contact-section" id="contact">
-        <h2>Planifier un Atelier Technique (15 min)</h2>
-        <p>Découvrez notre simulateur de runtime local ISO 20022 et validez l'intégration de notre boîte noire avec vos ingénieurs d'infrastructure.</p>
-        
-        <!-- Formulaire de contact sécurisé et gratuit via Formspree -->
-        <!-- FORMULAIRE BANQUE ÉTAPE 1 -->
         <form id="form-bank-step-1" style="width: 100%;">
             <input type="text" name="name" placeholder="Votre nom complet" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
             <input type="text" name="institution" placeholder="Institution financière / Banque" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
             <input type="email" name="email" placeholder="Adresse email professionnelle" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
             <input type="tel" name="phone" placeholder="Numéro de téléphone direct" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
-            <textarea name="message" rows="5" placeholder="Votre message ou contraintes d'infrastructure (Kafka, MQ, ESB...)" required style="width: 100%; padding: 10px; margin-bottom: 20px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px; font-family: inherit;"></textarea>
-            <button type="submit" class="btn" id="btn-bank-1" style="width: 100%;">Demander l'accès à l'atelier technique & Passer à l'Étape 2</button>
+            <textarea name="message" rows="5"  placeholder="Specify your core infrastructure constraints (Kafka, MQ, ESB...)" required style="width: 100%; padding: 10px; margin-bottom: 20px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px; font-family: inherit;"></textarea>
+            <button type="submit" class="btn" id="btn-bank-1">Demander l'accès à l'atelier technique & Passer à l'Étape 2</button>
         </form>
 
     </section>
@@ -187,11 +171,13 @@
         `;
     }
 
-    // Lancement par défaut au chargement de la page
+        // Lancement par défaut au chargement de la page
     document.addEventListener("DOMContentLoaded", () => lancerSimulation('BNP'));
-    // INTERCEPTION & ASYNCHRONOUS STORAGE FOR PIPELINE
-    document.getElementById('form-bank-step-1').addEventListener('submit', async function(event) {
-        event.preventDefault();
+
+    // Interception de la soumission pour la gestion asynchrone du workflow
+    document.getElementById('form-bank-step-1').addEventListener('submit', function(event) {
+        event.preventDefault(); // Bloque strictement la redirection par défaut de Formspree
+        
         const btn = document.getElementById('btn-bank-1');
         btn.innerText = "Traitement de l'autorisation...";
         btn.disabled = true;
@@ -199,22 +185,29 @@
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
 
-        // Sauvegarde temporaire des coordonnées bancaires
+        // Sauvegarde locale dans la mémoire du navigateur pour l'Étape 2
         localStorage.setItem('bank_email', data.email);
         localStorage.setItem('bank_phone', data.phone);
         localStorage.setItem('bank_name', data.name);
         localStorage.setItem('bank_institution', data.institution);
 
-        try {
-            await fetch("https://formspree.io/f/mzepgojb", {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
-            });
+        // PARADE ABSOLUE : Déclenchement de la redirection forcée locale
+        // Qu'importe la réponse de Formspree, le banquier bascule à l'Étape 2 dans 1,2 seconde.
+        setTimeout(() => {
             window.location.href = "cahier_des_charges_signature.html";
-        } catch (error) {
-            window.location.href = "cahier_des_charges_signature.html";
-        }
+        }, 1200);
+
+        // Envoi en arrière-plan transparent vers Formspree
+        fetch("https://formspree.io/f/mzepgojb", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).catch(err => {
+            // Empêche un bloqueur de script ou un proxy bancaire strict de figer l'interface
+        });
     });
     </script>
 
