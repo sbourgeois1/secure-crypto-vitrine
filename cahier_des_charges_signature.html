@@ -46,24 +46,6 @@
             3. JURIDICTION :<br>
             Cette acceptation numérique vaut signature de conformité technique d'infrastructure, régie par le droit belge pour les pays membres de la zone SEPA.
         </div>
-        ***nouveau
-
-        <form id="form-bank-step-2">
-            <!-- CHAMPS INVISIBLES DE SÉCURITÉ (Doivent avoir ID ET NAME) -->
-            <input type="hidden" id="hidden_bank_name" name="client_name">
-            <input type="hidden" id="hidden_bank_institution" name="client_institution">
-            <input type="hidden" id="hidden_bank_email" name="client_email">
-            <input type="hidden" id="hidden_bank_phone" name="client_phone">
-
-            <!-- Vos champs de signature de l'étape 2 (Exemple : cases à cocher, mentions) -->
-            <label>
-                <input type="checkbox" name="legal_agreement" required>
-                Je certifie la conformité aux exigences de l'architecture SECURE_CRYPTO
-            </label>
-
-            <button type="submit" class="btn" id="btn-bank-2">Signer le Cahier des Charges & Valider l'accès</button>
-        </form>
-        ***fin nouveau
 
         <form id="form-bank-step-2">
             <input type="hidden" name="contract_type" value="BANK_INTEGRATION_AGREEMENT_v5.3">
@@ -74,7 +56,7 @@
 
             <div style="margin-bottom: 15px;">
                 <label style="display: block; margin-bottom: 5px; font-size: 0.9rem; color: #fff;">Signature légale (Saisissez votre Nom Complet & Institution) :</label>
-                <input type="text" name="legal_signature" placeholder="Je soussigné, [Nom], agissant pour le compte de [Banque], accepte les termes" required style="width: 100%; padding: 12px; background: #050913; border: 1px solid #475569; color: #fff; border-radius: 4px;">
+                <input type="text" name="legal_signature" placeholder="Je soussigné, [Nom], agissant pour le compte de [Banque], accepte les termes" required style="width: 100%; padding: 12px; border: 1px solid #475569; color: #fff; border-radius: 4px;">
             </div>
 
             <div style="margin-bottom: 25px; display: flex; align-items: flex-start; gap: 10px;">
@@ -82,7 +64,7 @@
                 <label for="agreement" style="font-size: 0.88rem; color: var(--text-muted); cursor: pointer;">Je certifie disposer de l'autorité requise pour engager mon institution dans cette phase d'audit technique.</label>
             </div>
 
-            <button type="submit" class="btn" id="btn-bank-2" style="width: 100%; background: #00ff87; color: #0f172a; font-weight: bold; margin-bottom: 15px;">Valider la Signature de Conformité & Recevoir la Sandbox</button>
+            <button type="submit" class="btn" id="btn-bank-2" style="width: 100%; color: #0f172a; font-weight: bold; margin-bottom: 15px;">Valider la Signature de Conformité & Recevoir la Sandbox</button>
             <a href="index.html" class="btn" style="display: block; text-align: center; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid #1e293b; text-decoration: none; padding: 10px 0; border-radius: 4px;">◀ Retour à l'accueil</a>
         </form>
     </section>
