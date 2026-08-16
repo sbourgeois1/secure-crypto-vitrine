@@ -3,218 +3,358 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>secure_crypto - Bouclier Souverain Post-Quantique</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>secure_crypto | Passerelle de Compensation Interbancaire ISO 20022</title>
+    <style>
+        :root {
+            --bg-main: #0f172a;       /* Bleu ardoise de la palette Tailwind */
+            --bg-card: #1e293b;       /* Fond des boîtes surélevées */
+            --bg-input: #0b0f1d;      /* Fond des champs de saisie */
+            --text-main: #f8fafc;     /* Texte blanc cassé très lisible */
+            --text-muted: #94a3b8;    /* Gris-bleu pour les notes secondaires */
+            --accent-bank: #00ff87;   /* Vert émeraude haute visibilité */
+            --border: #334155;        /* Bordures nettes et visibles */
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        .logo { font-size: 1.8rem; font-weight: bold; }
+        .logo span { color: var(--accent-bank); }
+        
+        .bank-badge {
+            color: var(--accent-bank);
+            font-weight: bold;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        /* CONFIGURATION SPA : PANNEAUX DYNAMIQUES */
+        .step-panel {
+            display: none; /* Masqués par défaut */
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .step-panel.active {
+            display: block; /* Affiché uniquement si actif */
+        }
+
+        .step-indicator {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: var(--accent-bank);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h2 { font-size: 1.5rem; margin-top: 0; }
+        label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: #fff; }
+        
+        input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            color: #fff;
+            box-sizing: border-box;
+            font-family: inherit;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus, textarea:focus { border-color: var(--accent-bank); outline: none; }
+        
+        .btn-submit {
+            width: 100%;
+            background: var(--accent-bank);
+            color: var(--bg-main);
+            border: none;
+            padding: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 1rem;
+            border-radius: 4px;
+        }
+
+        .specs-box {
+            background: #0b0f1d;
+            border: 1px solid var(--accent-bank);
+            padding: 20px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            overflow-y: scroll;
+            max-height: 250px;
+            color: var(--accent-bank);
+            margin-bottom: 25px;
+            text-align: justify;
+            line-height: 1.6;
+        }
+
+        .pipeline-box {
+            background: #0b0f1d;
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 6px;
+            margin: 30px 0;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+    </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">secure<span>_crypto</span></div>
-        <a href="en.html" class="lang-switch">English 🌐</a>
-    </header>
+    <div class="container">
+        
+        <header>
+            <div class="logo">secure<span>_crypto</span></div>
+            <div class="bank-badge">DIVISION COMPENSATION INTERBANCAIRE</div>
+        </header>
 
-    <section class="hero">
-        <h1>Le Bouclier Souverain pour l'Ère Post-Quantique</h1>
-        <p>Passerelle de chiffrement interbancaire autonome, native ISO 20022 et cloisonnée par code BIC. Protégez vos flux financiers stratégiques contre les menaces de demain.</p>
-        <a href="#contact" class="btn">Réserver un atelier technique</a>
-    </section>
+        <!-- FORMULAIRE CENTRALISÉ UNIQUE BANQUE -->
+        <form id="form-bank-spa">
 
-    <!-- BANDEAU DE CERTIFICATION TECHNIQUE INTÉGRÉ -->
-    <section class="tech-description-box" style="max-width: 1100px; margin: 40px auto; padding: 25px; background: rgba(10, 15, 29, 0.6); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,255,135,0.05);">
-        <p style="text-align: justify; line-height: 1.8; font-size: 1.15rem; color: var(--text-main); margin: 0;">
-            💡 <strong>Sécurité rigoureuse :</strong> Le message financier ISO 20022 est traduit sous forme de vecteur dans un espace à <strong>8 dimensions</strong> et contient en plus <strong>2 jetons éphémères</strong> pour chaque virement. Ceci rend le processus de cryptage unique. Non seulement les messages sont indéchiffrables, mais tout déchiffrement éventuel ultérieur est rendu totalement inexploitable, même avec les ordinateurs quantiques.
+            <!-- ========================================== -->
+            <!-- STEP 1 : IDENTIFICATION BANCAIRE          -->
+            <!-- ========================================== -->
+            <div id="step-panel-1" class="step-panel active">
+                <div class="step-indicator">ÉTAPE OPÉRATIONNELLE 1 SUR 3 : DEMANDE INITIALE</div>
+                <h2>Évaluation de la Passerelle Core Banking</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px;">Veuillez déclarer vos paramètres institutionnels et vos contraintes d'infrastructure pour initialiser votre accès Sandbox.</p>
+
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label for="last_name">Nom de famille *</label>
+                        <input type="text" id="last_name" name="last_name" required placeholder="De Smet">
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <label for="first_name">Prénom *</label>
+                        <input type="text" id="first_name" name="first_name" required placeholder="Jean">
+                    </div>
+                </div>
+
+                <label for="email">Adresse E-mail Professionnelle *</label>
+                <input type="email" id="email" name="email" required placeholder="j.desmet@bnpparibas.com">
+
+                <label for="phone">Ligne Directe (Vérification WhatsApp Business OOB) *</label>
+                <input type="tel" id="phone" name="phone" required placeholder="+32 47X XX XX XX">
+
+                <label for="org">Institution Financière / Banque *</label>
+                <input type="text" id="org" name="institution" required placeholder="BNP Paribas Fortis">
+
+                <label for="country">Pays de Juridiction *</label>
+                <input type="text" id="country" name="country" required placeholder="Belgique, France, Luxembourg...">
+
+                <label for="subject">Objet de l'évaluation technique *</label>
+                <select id="subject" name="inquiry_subject" required>
+                    <option value="" disabled selected>-- Sélectionnez l'objectif principal --</option>
+                    <option value="SECURE_CRYPTO_BANKING">Passerelle Core Banking Gateway (Sandbox Interbancaire ISO 20022)</option>
+                    <option value="QUANTUM_HARDWARE">Quantum Hardware: Coprocesseur à Réseau Apériodique</option>
+                    <option value="GENERAL_CONSULTING">Consulting & Audit de Résilience Post-Quantique</option>
+                </select>
+
+                <label for="msg">Contraintes Spécifiques d'Infrastructure / Routage ESB *</label>
+                <textarea id="msg" name="message_contraintes_step1" rows="5" required placeholder="Décrivez vos contraintes de latence, architecture de serveurs ou protocoles de sécurité locaux..."></textarea>
+
+                <button type="button" class="btn-submit" id="btn-to-step-2">Accéder au Cadre de Conformité Grade DORA ➔</button>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- STEP 2 : CADRE DORA & SIGNATURE CONTRAT   -->
+            <!-- ========================================== -->
+            <div id="step-panel-2" class="step-panel">
+                <div class="step-indicator">ÉTAPE OPÉRATIONNELLE 2 SUR 3 : SIGNATURE ÉLECTRONIQUE</div>
+                <h2>Approbation de l'Architecture de Livraison (Grade DORA)</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px;">Veuillez confirmer votre accord avec les conditions d'audit de la boîte noire Stateless avant le déploiement de l'évaluation.</p>
+
+                <div class="specs-box">
+                    CADRE CONTRAT D'ÉVALUATION INTERBANCAIRE ISO 20022<br>
+                    --------------------------------------------------<br>
+                    PROJET : Passerelle secure_crypto Multi-Tenant v5.3.0<br>
+                    CONFORMITÉ : Audits de Résilience Opérationnelle Européenne<br><br>
+                    1. RECONNAISSANCE DES PÉRIMÈTRES LOGICIELS :<br>
+                    L'institution financière s'engage à tester le conteneur d'évaluation de manière isolée au sein de sa Sandbox locale. Le mode MODE_DEMO=True est requis pour les tests de validation en RAM, tandis que le mode production strict s'adossera à l'infrastructure ESB de la banque.<br><br>
+                    2. ÉTANCHÉITÉ DES LICENCES SOUVERAINES :<br>
+                    Le binaire s'exécute en mode Fail-Closed. Toute tentative d'exfiltration ou de modification du fichier de licence réglementaire .lic entraînera le gel automatique immédiat du pipeline cryptographique du nœud local.<br><br>
+                    3. JURIDICTION :<br>
+                    Cette acceptation numérique vaut signature de conformité technique d'infrastructure, régie par le droit belge pour les pays membres de la zone SEPA.
+                </div>
+
+                <label for="legal_signature">Signature Légale Numérique (Saisissez votre Nom Complet & Institution) *</label>
+                <input type="text" id="legal_signature" name="legal_signature" placeholder="Je soussigné, Jean De Smet, agissant pour le compte de mon institution, accepte les termes">
+
+                <div style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 10px;">
+                    <input type="checkbox" id="auth_check" name="authority_checked" value="YES" style="margin-top: 4px; cursor: pointer;">
+                    <label for="auth_check" style="font-size: 0.88rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
+                        Je certifie disposer de l'autorité requise pour engager mon institution dans cette phase d'audit technique.
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 25px; display: flex; align-items: flex-start; gap: 10px;">
+                    <input type="checkbox" id="rgpd_bank" name="rgpd_consent" value="YES" style="margin-top: 4px; cursor: pointer;">
+                    <label for="rgpd_bank" style="font-size: 0.85rem; color: #64748b; cursor: pointer; line-height: 1.4;">
+                        En cochant cette case, j'accepte que mes coordonnées professionnelles soient stockées et traitées par l'éditeur secure_crypto pour les besoins stricts de l'accès à l'infrastructure d'audit de la Sandbox, conformément au RGPD.
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit" id="btn-final-submit">Valider la Signature de Conformité & Transmettre</button>
+                <button type="button" id="btn-back-to-1" style="display: block; width: 100%; text-align: center; background: rgba(255,255,255,0.02); color: #fff; border: 1px solid var(--border); padding: 12px 0; border-radius: 4px; font-size: 0.9rem; margin-top: 15px; cursor: pointer; font-family: inherit;">◀ Retour au Profil d'Information</button>
+            </div>
+
+        </form> <!-- Fermeture propre du formulaire unique -->
+
+        <!-- ========================================== -->
+        <!-- STEP 3 : CONFIRMATION BANCAIRE FINALISÉE  -->
+        <!-- ========================================== -->
+        <div id="step-panel-3" class="step-panel">
+            <div style="text-align: center; font-size: 3.5rem; color: var(--accent-bank); margin-bottom: 15px;">✓</div>
+            <h2 style="text-align: center;">Conformité Certifiée avec Succès</h2>
+            <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; text-align: center;">
+                Merci. Votre demande d'accès Sandbox et votre signature numérique de conformité ont été enregistrées et horodatées au sein de notre registre d'infrastructure.
+            </p>
+
+            <div class="pipeline-box">
+                <h4 style="margin-top: 0; color: var(--accent-bank); text-transform: uppercase; letter-spacing: 1px; font-size: 0.95rem;">Prochaines étapes de validation :</h4>
+                <ol style="padding-left: 20px; margin-bottom: 0; line-height: 1.8; color: #a7f3d0;">
+                    <li><strong>Audit d'Identité :</strong> Le Dr. Ir. S. Bourgeois procédera personnellement à la validation de vos accréditations professionnelles.</li>
+                    <li><strong>Expédition de la Sandbox :</strong> Après validation manuelle, un jeton de téléchargement chiffré contenant votre conteneur Docker Sandbox isolé vous sera envoyé par e-mail sous quelques jours.</li>
+                </ol>
+            </div>
+
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; text-align: center;">
+                Pour toute urgence relative au calendrier de vos audits réglementaires DORA, veuillez contacter directement la division interbancaire.
+            </p>
+            <button type="button" onclick="window.location.reload();" class="btn-submit" style="background: transparent; color: var(--accent-bank); border: 1px solid var(--accent-bank);">Retourner à l'Accueil de la Division</button>
+        </div>
+
+    </div> <!-- Fermeture du container principal -->
+
+    <!-- BANDEAU DE GESTION DES COOKIES BANQUE -->
+    <div id="cookie-banner-bank" style="position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 450px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5); z-index: 9999; display: none; font-size: 0.88rem; line-height: 1.4;">
+        <p style="margin: 0 0 15px 0; color: var(--text-main);">
+            <strong>Notification de Confidentialité :</strong> Ce terminal utilise exclusivement des paramètres de stockage locaux techniques pour assurer la synchronisation des étapes du flux de sécurité. Aucun traceur analytique n'est déployé.
         </p>
-    </section>
-
-    <main class="grid">
-        <div class="card">
-            <h3>Immunité Post-Quantique</h3>
-            <p>Notre noyau mathématique propriétaire repose sur des structures continues de haute dimension non linéaires et non commutatives. Il neutralise nativement les menaces de décryptage quantique futures (résistance aux analyses de type Shor), bloquant la stratégie "Harvest Now, Decrypt Later".</p>
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button id="accept-cookies-bank" style="background: var(--accent-bank); color: var(--bg-main); border: none; padding: 8px 16px; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Accepter le Protocole</button>
         </div>
-
-        <div class="card">
-            <h3>Cloisonnement Endogène par BIC</h3>
-            <p>Aucun dictionnaire de clés ou base de données relationnelle à maintenir. La solution dérive de manière déterministe et autonome un masque unique à 14 paramètres par couloir d'échange interbancaire, assurant une étanchéité parfaite de chaque liaison.</p>
-        </div>
-        
-        <div class="card">
-            <h3>Compatibilité Infrastructure</h3>
-            <p>Déploiement Plug & Play sous forme de conteneur Docker. S'intègre directement au-dessus de vos architectures Core Banking existantes sans exiger de modification de vos réseaux de transport. **Évite le transit répété de lourdes signatures RSA, éliminant toute surcharge de bande passante**.</p>
-        </div>
-
-        <div class="card">
-            <h3>Gouvernance Fail-Closed</h3>
-            <p>Le contrôle d'accès réglementaire temporel est sanctuarisé au cœur du binaire opaque. Sécurisé par une signature asymétrique RSA-PSS 4096 bits, le service bloque instantanément le traitement en mode Fail-Closed en cas de licence non conforme ou expirée.</p>
-        </div>
-
-        <div class="card">
-            <h3>Supervision Proactive & i18n</h3>
-            <p>Journalisation système standardisée émettant une alerte critique automatisée 14 jours avant l'échéance de la licence pour vos outils SIEM. Gestion internationale native des statuts d'erreurs en 5 langues (FR, EN, DE, NL, ES).</p>
-        </div>
-
-        <div class="card">
-            <h3>Conformité Native ISO 20022</h3>
-            <p>Protocole optimisé pour les messages financiers de gros montants <strong>pacs.008 (Virements Clients)</strong> et <strong>pacs.009 (Virements de Couverture)</strong>. L'en-tête technique d'application (AppHdr) reste lisible pour les automates de routage.</p>
-        </div>
-    </main>
-
-    <!-- SECTION DÉMONSTRATION INTERACTIVE SYMÉTRIQUE -->
-    <section class="demo-section" id="demo">
-        <h2 style="text-align: center; margin-top: 0;">Démonstration Interactive du Flux Interbancaire</h2>
-        <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">Sélectionnez un scénario de virement pour visualiser le routage, la taille des charges utiles réseau et la validation du double jeton de Handshake en temps réel.</p>
-        
-        <div class="demo-selector">
-            <button class="btn-demo active" onclick="lancerSimulation('BNP')">Scénario A : Barclays ➔ BNP Paribas</button>
-            <button class="btn-demo" onclick="lancerSimulation('ING')">Scénario B : Barclays ➔ ING Groep</button>
-        </div>
-
-        <div class="flow-container" id="flow-display">
-            <!-- Les étapes dynamiques s'afficheront ici via JavaScript -->
-        </div>
-    </section>
-
-    <!-- SECTION CONTACT FORMSPREE RESTAURÉE -->
-    <section class="contact-section" id="contact">
-        <h2>Planifier un Atelier Technique (15 min)</h2>
-        <p>Réservé aux directions de l'infrastructure, de la cybersécurité (RSSI) et de l'innovation bancaire. Recevez notre conteneur d'évaluation isolé pour vos simulations locales.</p>
-
-        <form id="form-bank-step-1">
-            <input type="text" name="name" placeholder="Votre nom complet" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
-            <input type="text" name="institution" placeholder="Institution financière / Banque" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
-            <input type="email" name="email" placeholder="Adresse email professionnelle" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
-            <input type="tel" name="phone" placeholder="Numéro de téléphone direct" required style="width: 100%; padding: 10px; margin-bottom: 15px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px;">
-            <textarea name="message" rows="5"  placeholder="Specify your core infrastructure constraints (Kafka, MQ, ESB...)" required style="width: 100%; padding: 10px; margin-bottom: 20px; background: #050913; border: 1px solid var(--border); color: #fff; border-radius: 4px; font-family: inherit;"></textarea>
-            <button type="submit" class="btn" id="btn-bank-1">Demander l'accès à l'atelier technique & Passer à l'Étape 2</button>
-        </form>
-
-    </section>
-
-    <footer>
-        <p>&copy; 2026 secure_crypto. Tous droits réservés. Classification : Confidentiel Banque.</p>
-    </footer>
+    </div>
 
     <script>
-    const simulations = {
-        BNP: {
-            banque_dest: "BNP PARIBAS",
-            bic_dest: "BNPAFRPPXXX",
-            token_a: "a7b3c2d5e6f890ab",
-            token_b: "b9e4f3a2c1d098ef",
-            len_in: "324",
-            len_out: "442",
-            r: "0.3542",
-            v: "Yt4TJ1V6zD+bBri4kZvQP0FpT9gELd..."
-        },
-        ING: {
-            banque_dest: "ING GROEP",
-            bic_dest: "INGBNL2AXXX",
-            token_a: "f8e2d1c9b8a765cd",
-            token_b: "c3d2e1f0a9b87654",
-            len_in: "324",
-            len_out: "442",
-            r: "0.7814",
-            v: "K9pLM2N4xZ+qWrs5tYvBN0PlK8mNDf..."
-        }
-    };
-
-    function lancerSimulation(cible) {
-        document.querySelectorAll('.btn-demo').forEach(btn => btn.classList.remove('active'));
-        if(event && event.target) {
-            event.target.classList.add('active');
-        }
-
-        const data = simulations[cible];
-        const container = document.getElementById('flow-display');
-        
-        container.innerHTML = `
-            <div class="flow-step">
-                <h4>Étape 1 : Initialisation dans le Core Banking (BARCLAYS)</h4>
-                <p>Le client valide un virement de 250 000,00 EUR. Le système central génère le message réglementaire ISO 20022 <code>pacs.008</code> ou <code>pacs.009</code>.</p>
-                <div class="code-box"><strong>INPUT local (ESB Barclays) | Taille : ${data.len_in} octets :</strong><br>{
-                  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260807-001" },
-                  "credit_transfer": { "end_to_end_id": "E2E-1442188", "dbtr_nm": "Client Émetteur", "interbk_sttlm_amt": { "value": 250000.00, "ccy": "EUR" } }
-                }</div>
-            </div>
-
-            <div class="flow-step">
-                <h4>Étape 2 : Chiffrement par la Passerelle SECURE_CRYPTO (Chez Barclays)</h4>
-                <p>L'ESB interne pousse le flux vers le conteneur. Le cœur binaire dérive les 14 coefficients du canal et traduit le message sous forme de vecteur à <strong>8 dimensions</strong> enrichi du double jeton du Handshake synchrone.</p>
-                <div class="code-box"><strong>OUTPUT Réseau opaque | Taille : ${data.len_out} octets (Aucune surcharge) :</strong><br>{
-                  "app_hdr": { "fr_bic": "BARCGB2LXXX", "to_bic": "${data.bic_dest}", "biz_msg_idr": "MSG-20260807-001" },
-                  "crypto_payload": { 
-                    "algorithm": "Geometric-Manifold-Shield", 
-                    "r_coefficient": <span>${data.r}</span>, 
-                    "v_vector_b64": "${data.v}", 
-                    "handshake_tokens": {
-                      "token_a_emission": <em>"${data.token_a}"</em>,
-                      "token_b_reception": <em>"${data.token_b}"</em>
-                    }
-                  }
-                }</div>
-            </div>
-
-            <div class="flow-step">
-                <h4>Étape 3 : Transit Réseau Interbancaire</h4>
-                <p>Le message transite sur le réseau de compensation (SWIFT/SIA). L'en-tête technique reste lisible pour les aiguillages, mais la charge utile financière à 8 dimensions est indéchiffrable et immunisée contre toute interception.</p>
-            </div>
-
-            <div class="flow-step">
-                <h4>Étape 4 : Réception et Routage Interne (Chez ${data.banque_dest})</h4>
-                <p>Le routeur d'infrastructure de la banque réceptrice intercepte le paquet et transmet la structure JSON brute directement à sa boîte noire locale <code>secure_crypto</code>.</p>
-                <div class="code-box"><strong>INPUT local (Boîte Noire destinataire) | Taille : ${data.len_out} octets :</strong><br>Identique à l'OUTPUT réseau de l'étape 2. Les jetons éphémères transitent pour aligner la reconstruction géométrique.</div>
-            </div>
-            <div class="flow-step">
-                <h4>Étape 5 : Déchiffrement et Restauration Core Banking</h4>
-                <p>Le cœur binaire de la banque réceptrice valide sa licence locale, applique l'inversion géométrique sur les jetons combinés et restitue le document d'origine avec intégrité.</p>
-                <div class="code-box"><strong>OUTPUT final (Délivré au Core Banking destinataire) :</strong><br>✅ [SUCCÈS ${data.banque_dest}] Inversion réussie. Message financier ISO 20022 restauré en clair à 100% avec intégrité anti-rejeu et anti-spoofing. Prêt pour l'inscription au grand livre.</div>
-            </div>
-        `;
-    }
-
-        // Lancement par défaut au chargement de la page
-    document.addEventListener("DOMContentLoaded", () => lancerSimulation('BNP'));
-
-    // Interception de la soumission pour la gestion asynchrone du workflow
-    document.getElementById('form-bank-step-1').addEventListener('submit', function(event) {
-        event.preventDefault(); // Bloque strictement la soumission standard
-        
-        const btn = document.getElementById('btn-bank-1');
-        btn.innerText = "Traitement de l'autorisation...";
-        btn.disabled = true;
-
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData.entries());
-
-        // Sauvegarde locale dans la mémoire du navigateur pour l'Étape 2
-        localStorage.setItem('bank_email', data.email);
-        localStorage.setItem('bank_phone', data.phone);
-        localStorage.setItem('bank_name', data.name);
-        localStorage.setItem('bank_institution', data.institution);
-
-        // PARADE ABSOLUE : Redirection forcée au bout de 1200ms quoi qu'il arrive
-        const forceRedirect = setTimeout(() => {
-            window.location.href = "cahier_des_charges_signature.html";
-        }, 1200);
-
-        // Envoi en arrière-plan non bloquant (Fire and Forget)
-        fetch("https://formspree.io/f/mzepgojb", {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: { 
-                'Accept': 'application/json', 
-                'Content-Type': 'application/json' 
+        // 1. HORODATAGE ET BANDEAU DE COOKIES
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!localStorage.getItem("cookies_bank_accepted")) {
+                document.getElementById("cookie-banner-bank").style.display = "block";
             }
-        })
-        .then(() => {
-            clearTimeout(forceRedirect); // Annule le timeout si la réponse est plus rapide
-            window.location.href = "cahier_des_charges_signature.html";
-        })
-        .catch(() => {
-            // En cas d'erreur réseau ou bloqueur, le setTimeout prend le relais pour rediriger
         });
-    });
 
+        document.getElementById("accept-cookies-bank").addEventListener("click", () => {
+            localStorage.setItem("cookies_bank_accepted", "true");
+            document.getElementById("cookie-banner-bank").style.display = "none";
+        });
+
+        // 2. CINÉTIQUE SPA : DU STEP 1 VERS LE STEP 2
+        document.getElementById('btn-to-step-2').addEventListener('click', () => {
+            const step1Fields = ['last_name', 'first_name', 'email', 'phone', 'org', 'country', 'subject', 'msg'];
+            let step1Valid = true;
+
+            step1Fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && !el.checkValidity()) {
+                    el.reportValidity(); // Alerte native du navigateur si champ vide
+                    step1Valid = false;
+                }
+            });
+
+            if (step1Valid) {
+                // Basculement visuel instantané sans rechargement
+                document.getElementById('step-panel-1').classList.remove('active');
+                document.getElementById('step-panel-2').classList.add('active');
+                
+                // Activation des contraintes requises pour l'Étape 2 uniquement quand elle apparaît
+                document.getElementById('legal_signature').required = true;
+                document.getElementById('auth_check').required = true;
+                document.getElementById('rgpd_bank').required = true;
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        // REVENIR DU STEP 2 VERS LE STEP 1
+        document.getElementById('btn-back-to-1').addEventListener('click', () => {
+            document.getElementById('step-panel-2').classList.remove('active');
+            document.getElementById('step-panel-1').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 3. ENVOI UNIQUE ET TRANSITION INFAILLIBLE VERS LE STEP 3
+        document.getElementById('form-bank-spa').addEventListener('submit', function(event) {
+            event.preventDefault(); // Verrouille strictement le navigateur
+            
+            const btn = document.getElementById('btn-final-submit');
+            btn.innerText = "ENREGISTREMENT DE LA CONFORMITÉ DORA...";
+            btn.disabled = true;
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            // AJOUT DE PARAMÈTRES FIXES DE CONTRAT POUR VOTRE MAIL FORMSPREE
+            data.contract_type = "BANK_INTEGRATION_AGREEMENT_v5.3";
+
+            // PARADE TECHNIQUE : Redirection forcée au bout de 1,2 seconde quoi qu'il arrive
+            const safetyRedirect = setTimeout(() => {
+                document.getElementById('step-panel-2').classList.remove('active');
+                document.getElementById('step-panel-3').classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 1200);
+
+            // Envoi asynchrone direct branché sur votre clé de formulaire Banque (mzepgojb)
+            fetch("https://formspree.io/f/mzepgojb", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: { 
+                    'Accept': 'application/json', 
+                    'Content-Type': 'application/json' 
+                }
+            })
+            .then(() => {
+                clearTimeout(safetyRedirect); // Réponse reçue à temps, basculement immédiat
+                document.getElementById('step-panel-2').classList.remove('active');
+                document.getElementById('step-panel-3').classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            })
+            .catch(() => {
+                // En cas de coupure ou de proxy strict, la parade prend le relais proprement
+            });
+        });
     </script>
-
 </body>
 </html>
