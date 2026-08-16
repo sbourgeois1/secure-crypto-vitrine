@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>secure_crypto | ISO 20022 Interbank Clearing Gateway</title>
     <style>
+        /* LANGUAGE SWITCHER BUTTON */
+        .lang-switcher {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: transparent;
+            color: var(--accent-bank);
+            border: 1px solid var(--accent-bank);
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+        .lang-switcher:hover {
+            background: rgba(0, 255, 135, 0.1);
+            box-shadow: 0 0 10px rgba(0, 255, 135, 0.2);
+        }
         :root {
             --bg-main: #0f172a;       /* Slate blue background */
             --bg-card: #1e293b;       /* Elevated card panels */
@@ -135,7 +155,10 @@
 
     <div class="container">
         
-        <header>
+        <header style="position: relative;">
+            <!-- LANGUAGE SWITCHER BUTTON -->
+            <a href="index.html" class="lang-switcher">FR 🇫🇷</a>
+            
             <div class="logo">secure<span>_crypto</span></div>
             <div class="bank-badge">INTERBANK CLEARING DIVISION</div>
         </header>
