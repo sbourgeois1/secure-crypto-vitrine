@@ -116,7 +116,37 @@
         </header>
 
         <!-- Value proposition cards and demo section (MUST remain OUTSIDE the enrollment form) -->
+        <div class="card">
+            <h3 style="text-align: center;">💡Post-Quantum Immunity</h3>
+            <p>The ultra_crypto system integrates a specific 16D geometric transformation and a synchronous double token for each credit transfer to guarantee the <strong>post-quantum resilience</strong> of ISO 20022 interbank flows.</p>
+        </div>
+        <div class="card">
+            <h3 style="text-align: center;">💡Endogenous Partitioning by BIC</h3>
+            <p>No key dictionary or relational databases to maintain. The solution deterministically and autonomously derives a unique mask per interbank exchange corridor, ensuring <strong>perfect airtightness for each network connection</strong>.</p>
+        </div>
+        <div class="card">
+            <h3 style="text-align: center;">💡Infrastructure Compatibility</h3>
+            <p>The solution, encapsulated in a native Rust binary container, allows a "Plug & Play" deployment without any bandwidth overhead. Ultra Crypto <strong>prevents bandwidth saturation</strong> by avoiding the repeated transit of heavy RSA signatures.</p>
+        </div>
+        <div class="card">
+            <h3 style="text-align: center;">💡Adaptability</h3>
+            <p>The code, structured for direct integration, can be analyzed via the <strong>provided technical documentation package</strong> to be easily handled and audited by local specialists.</p>
+        </div>
 
+        <!-- Interactive demonstration (OUTSIDE the form to prevent click conflicts) -->
+        <section class="demo-section" id="demo">
+            <h2 style="text-align: center; margin-top: 0;">Interactive Interbank Flow Demonstration</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">Select a transfer scenario to visualize network routing, network payload sizes, and synchronous double handshake token validation in real time.</p>
+            
+            <div class="demo-selector">
+                <button type="button" class="btn-demo active" onclick="lancerSimulation('BNP')">Scenario A: Barclays ➔ BNP Paribas</button>
+                <button type="button" class="btn-demo" onclick="lancerSimulation('ING')">Scenario B: Barclays ➔ ING Groep</button>
+            </div>
+
+            <div class="flow-container" id="flow-display">
+                <!-- Dynamic steps will be rendered here via Javas_p_t -->
+            </div>
+        </section>
 
         <!-- Interactive demonstration (OUTSIDE the form to prevent click conflicts) -->
         <section class="demo-section" id="demo">
